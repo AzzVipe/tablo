@@ -1,0 +1,25 @@
+{
+	"name": "nuxt-app",
+	"private": true,
+	"scripts": {
+		"build": "nuxt build",
+		"dev": "nuxt dev",
+		"start": "npm run dev -- -o",
+		"generate": "nuxt generate",
+		"preview": "nuxt preview",
+		"postinstall": "nuxt prepare"
+	},
+	"devDependencies": {
+		"@nuxt/devtools": "latest",
+		"@nuxt/ui": "^2.19.2",
+		"@types/node": "^18.17.8",
+		"nuxt": "^3.9.3"
+	},
+	"dependencies": {
+		"@pinia/nuxt": "^0.4.11",
+		"date-fns": "^4.1.0",
+		"v-calendar": "^3.1.2",
+		"vue-router": "^4.5.0",
+		"vuedraggable": "^4.1.0"
+	}
+}

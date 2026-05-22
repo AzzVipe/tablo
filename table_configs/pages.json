@@ -1,0 +1,46 @@
+{
+	"config": [
+		{
+			"name": "Tasks",
+			"to": "/tasks",
+			"value": "tasks",
+			"icon": "ic:round-checklist"
+		},
+		{
+			"name": "Projects",
+			"to": "/projects",
+			"value": "projects",
+			"icon": "ic:round-folder-copy"
+		},
+		{
+			"name": "Organizations",
+			"to": "/organizations",
+			"value": "organizations",
+			"icon": "ic:round-apartment"
+		},
+		{
+			"name": "Users",
+			"to": "/users",
+			"value": "users",
+			"icon": "ic:round-groups"
+		}
+	],
+	"roles": [
+		{
+			"name": "superadmin",
+			"visible": true
+		},
+		{
+			"name": "admin",
+			"visible": true
+		},
+		{
+			"name": "team",
+			"visible": true,
+			"pages": {
+				"organizations": false,
+				"users": false
+			}
+		}
+	]
+}

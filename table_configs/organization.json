@@ -1,0 +1,131 @@
+{
+  "config": [
+    {
+      "name": "Name",
+      "type": "text",
+      "path": "name",
+      "is_add": true,
+      "is_update": true,
+      "is_visible": true,
+      "is_primary": true,
+      "image_field": "avatar",
+      "component": "TableCellsPeople"
+    },
+    {
+      "name": "Created by",
+      "type": "text",
+      "path": "createdBy.name",
+      "is_add": false,
+      "is_update": false,
+      "is_visible": true,
+      "image_field": "createdBy.avatar",
+      "component": "TableCellsPeople"
+    },
+    {
+      "name": "Created at",
+      "type": "date",
+      "path": "createdAt",
+      "sort": true,
+      "is_add": false,
+      "is_update": false,
+      "is_visible": true,
+      "date_format": "MMM DD YYYY",
+      "component": "TableCellsDate"
+    }
+  ],
+  "tab_headers": {
+    "about": {
+      "type": "details",
+      "headers": [
+        {
+          "name": "Tagline",
+          "type": "text",
+          "path": "about.tagline",
+          "is_visible": true,
+          "is_update": true,
+          "table_view": true,
+          "component": "TableCellsDefault"
+        },
+        {
+          "name": "Webiste",
+          "type": "text",
+          "path": "about.website_url",
+          "is_visible": true,
+          "is_update": true,
+          "table_view": true,
+          "component": "TableCellsDefault"
+        },
+        {
+          "name": "LinkedIn url",
+          "type": "text",
+          "path": "about.url",
+          "is_visible": true,
+          "is_update": true,
+          "table_view": true,
+          "component": "TableCellsDefault"
+        },
+        {
+          "name": "Year founded",
+          "type": "date",
+          "path": "about.founded_on_year",
+          "is_visible": true,
+          "is_update": true,
+          "table_view": true,
+          "component": "TableCellsDefault"
+        },
+        {
+          "name": "Employee count",
+          "type": "number",
+          "path": "about.employee_count",
+          "is_visible": true,
+          "is_update": true,
+          "table_view": true,
+          "component": "TableCellsDefault"
+        },
+        {
+          "name": "Follower count",
+          "type": "number",
+          "path": "about.follower_count",
+          "is_visible": true,
+          "is_update": true,
+          "table_view": true,
+          "component": "TableCellsDefault"
+        }
+      ]
+    },
+    "notes": {
+      "type": "notes",
+      "header": {
+        "name": "Files",
+        "type": "text",
+        "path": "notes",
+        "table_view": false,
+        "is_update": true,
+        "is_visible": true,
+        "component": "TableCellsDefault"
+      }
+    },
+    "history": {
+      "type": "history",
+      "header": {
+        "name": "History",
+        "type": "text",
+        "path": "history",
+        "table_view": false,
+        "is_update": false,
+        "is_visible": true,
+        "component": "TableCellsDefault"
+      }
+    }
+  },
+  "roles": [
+    {
+      "name": "superadmin",
+      "read": true,
+      "write": true,
+      "insert": true,
+      "delete": true,
+      "search": true
+    }
+  ]
+}
