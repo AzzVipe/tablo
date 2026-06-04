@@ -23,10 +23,6 @@ export default defineNuxtConfig({
 		dirs: ["~/components"],
 	},
 
-	pinia: {
-		autoImports: ["defineStore", "acceptHMRUpdate"],
-	},
-
 	modules: ["@pinia/nuxt", "@nuxt/ui"],
 
 	colorMode: {
