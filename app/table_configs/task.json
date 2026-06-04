@@ -1,0 +1,281 @@
+{
+	"config": [
+		{
+			"name": "Title",
+			"type": "text",
+			"path": "title",
+			"is_visible": true,
+			"searchable": true,
+			"is_add": true,
+			"is_update": true,
+			"component": "TableCellsDefault"
+		},
+		{
+			"name": "Due date",
+			"type": "date",
+			"path": "dueDate",
+			"sort": true,
+			"is_add": true,
+			"is_update": true,
+			"is_visible": true,
+			"update_many": true,
+			"highlight_due_date": true,
+			"default_value": "now + 7d",
+			"component": "TableCellsDate"
+		},
+		{
+			"name": "Project",
+			"type": "relation",
+			"path": "project",
+			"filter": true,
+			"is_add": true,
+			"is_update": true,
+			"is_visible": true,
+			"update_many": true,
+			"required": false,
+			"image_field": "avatar",
+			"refresh_on_update": true,
+			"get_from": "projects",
+			"get_from_value": "id",
+			"get_from_field": "title",
+			"unique_values": "project",
+			"component": "TableCellsMultiValue",
+			"display_type": "assign"
+		},
+		{
+			"name": "Stage",
+			"path": "stage",
+			"type": "select",
+			"filter": true,
+			"is_add": true,
+			"is_update": true,
+			"is_visible": true,
+			"update_many": true,
+			"optionsParentClass": "flex flex-row-reverse justify-end gap-1",
+			"options": [
+				{
+					"name": "To Do",
+					"value": "To Do",
+					"class": "bg-gray-700 text-gray-100 font-semibold",
+					"icon": "ic:round-radio-button-unchecked"
+				},
+				{
+					"name": "In Progress",
+					"value": "In Progress",
+					"class": "bg-blue-700 text-blue-100 font-semibold",
+					"icon": "ic:round-autorenew"
+				},
+				{
+					"name": "Awaiting Feedback",
+					"value": "Awaiting Feedback",
+					"class": "bg-yellow-700 text-yellow-100 font-semibold",
+					"icon": "ic:round-rate-review"
+				},
+				{
+					"name": "Updates",
+					"value": "Updates",
+					"class": "bg-orange-700 text-orange-100 font-semibold",
+					"icon": "ic:round-update"
+				},
+				{
+					"name": "Completed",
+					"value": "Completed",
+					"class": "bg-green-700 text-green-100 font-semibold",
+					"icon": "ic:round-check-circle"
+				},
+				{
+					"name": "Parked",
+					"value": "Parked",
+					"class": "bg-purple-700 text-purple-100 font-semibold",
+					"icon": "ic:round-pause-circle"
+				},
+				{
+					"name": "Cancelled",
+					"value": "Cancelled",
+					"class": "bg-red-700 text-red-100 font-semibold",
+					"icon": "ic:round-cancel"
+				}
+			],
+			"component": "TableCellsMultiValue",
+			"display_type": "stage"
+		},
+		{
+			"name": "Assigned to",
+			"type": "multi-relation",
+			"path": "assignedTo",
+			"filter": true,
+			"is_add": true,
+			"is_update": true,
+			"is_visible": true,
+			"update_many": true,
+			"required": false,
+			"image_field": "avatar",
+			"refresh_on_update": true,
+			"get_from": "users",
+			"get_from_value": "id",
+			"get_from_field": "name",
+			"unique_values": "assignedTo",
+			"component": "TableCellsMultiValue",
+			"display_type": "assign"
+		},
+		{
+			"name": "Priority",
+			"path": "priority",
+			"type": "select",
+			"filter": true,
+			"is_add": true,
+			"is_update": true,
+			"is_visible": true,
+			"update_many": true,
+			"optionsParentClass": "justify-between",
+			"options": [
+				{
+					"name": "Low",
+					"value": "Low",
+					"class": "bg-green-700 text-green-100 font-medium",
+					"icon": "ic:round-arrow-downward"
+				},
+				{
+					"name": "Medium",
+					"value": "Medium",
+					"class": "bg-orange-700 text-orange-100 font-medium",
+					"icon": "ic:round-horizontal-rule"
+				},
+				{
+					"name": "High",
+					"value": "High",
+					"class": "bg-red-700 text-red-100 font-medium",
+					"icon": "ic:round-priority-high"
+				}
+			],
+			"component": "TableCellsMultiValue",
+			"display_type": "stage"
+		},
+		{
+			"name": "Labels",
+			"path": "labels",
+			"type": "multi-select",
+			"filter": true,
+			"is_add": false,
+			"is_update": true,
+			"is_visible": true,
+			"update_many": true,
+			"optionsParentClass": "flex flex-row-reverse justify-end gap-1",
+			"options": [
+				{
+					"name": "Payments",
+					"value": "Payments",
+					"class": "bg-green-700 text-green-100 font-semibold",
+					"icon": "ic:round-credit-card"
+				},
+				{
+					"name": "Utilities",
+					"value": "Utilities",
+					"class": "bg-blue-700 text-blue-100 font-semibold",
+					"icon": "ic:round-electric-bolt"
+				},
+				{
+					"name": "Updates",
+					"value": "Updates",
+					"class": "bg-orange-700 text-orange-100 font-semibold",
+					"icon": "ic:round-update"
+				},
+				{
+					"name": "Enquiries",
+					"value": "Enquiries",
+					"class": "bg-purple-700 text-purple-100 font-semibold",
+					"icon": "ic:round-question-answer"
+				}
+			],
+			"component": "TableCellsMultiValue",
+			"display_type": "stage"
+		},
+		{
+			"name": "Created by",
+			"type": "text",
+			"path": "createdBy.name",
+			"is_add": false,
+			"is_update": false,
+			"is_visible": true,
+			"image_field": "createdBy.avatar",
+			"component": "TableCellsPeople"
+		},
+		{
+			"name": "Created at",
+			"type": "date",
+			"path": "createdAt",
+			"sort": true,
+			"is_add": false,
+			"is_update": false,
+			"is_visible": true,
+			"date_format": "MMM DD YYYY",
+			"component": "TableCellsDate"
+		}
+	],
+	"tab_headers": {
+		"notes": {
+			"type": "notes",
+			"header": {
+				"name": "Notes",
+				"type": "text",
+				"path": "notes",
+				"attachment": true,
+				"table_view": true,
+				"is_update": true,
+				"is_visible": true,
+				"component": "TableCellsDefault"
+			}
+		},
+		"chips": {
+			"type": "chips",
+			"header": {
+				"name": "Chips",
+				"type": "text",
+				"path": "chips",
+				"attachment": true,
+				"table_view": true,
+				"is_update": true,
+				"is_visible": true,
+				"component": "TableCellsDefault"
+			}
+		},
+		"history": {
+			"type": "history",
+			"header": {
+				"name": "History",
+				"type": "text",
+				"path": "history",
+				"table_view": false,
+				"is_update": false,
+				"is_visible": true,
+				"component": "TableCellsDefault"
+			}
+		}
+	},
+	"roles": [
+		{
+			"name": "superadmin",
+			"read": true,
+			"write": true,
+			"insert": true,
+			"delete": true,
+			"search": true
+		},
+		{
+			"name": "admin",
+			"read": true,
+			"write": true,
+			"insert": true,
+			"delete": true,
+			"search": true
+		},
+		{
+			"name": "team",
+			"read": true,
+			"write": false,
+			"insert": false,
+			"delete": false,
+			"search": true
+		}
+	]
+}

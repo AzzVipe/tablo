@@ -1,0 +1,217 @@
+{
+	"config": [
+		{
+			"name": "Title",
+			"type": "text",
+			"path": "title",
+			"is_visible": true,
+			"searchable": true,
+			"is_add": true,
+			"is_update": true,
+			"component": "TableCellsDefault"
+		},
+		{
+			"name": "Due date",
+			"type": "date",
+			"path": "dueDate",
+			"sort": true,
+			"is_add": true,
+			"is_update": true,
+			"is_visible": true,
+			"update_many": true,
+			"highlight_due_date": true,
+			"default_value": "now + 7d",
+			"component": "TableCellsDate"
+		},
+		{
+			"name": "Organization",
+			"type": "relation",
+			"path": "organization",
+			"filter": true,
+			"is_add": true,
+			"is_update": true,
+			"is_visible": true,
+			"update_many": true,
+			"required": false,
+			"image_field": "avatar",
+			"refresh_on_update": true,
+			"get_from": "organizations",
+			"get_from_value": "id",
+			"get_from_field": "name",
+			"unique_values": "organization",
+			"component": "TableCellsMultiValue",
+			"display_type": "assign"
+		},
+		{
+			"name": "Assigned to",
+			"type": "multi-relation",
+			"path": "assignedTo",
+			"filter": true,
+			"is_add": true,
+			"is_update": true,
+			"is_visible": true,
+			"update_many": true,
+			"required": false,
+			"image_field": "avatar",
+			"refresh_on_update": true,
+			"get_from": "users",
+			"get_from_value": "id",
+			"get_from_field": "name",
+			"unique_values": "assignedTo",
+			"display_type": "assign",
+			"component": "TableCellsMultiValue"
+		},
+		{
+			"name": "Priority",
+			"path": "priority",
+			"type": "select",
+			"filter": true,
+			"is_add": true,
+			"is_update": true,
+			"is_visible": true,
+			"update_many": true,
+			"optionsParentClass": "justify-between",
+			"options": [
+				{
+					"name": "Low",
+					"value": "Low",
+					"class": "bg-green-700 text-green-100 font-medium",
+					"icon": "ic:round-arrow-downward"
+				},
+				{
+					"name": "Medium",
+					"value": "Medium",
+					"class": "bg-orange-700 text-orange-100 font-medium",
+					"icon": "ic:round-horizontal-rule"
+				},
+				{
+					"name": "High",
+					"value": "High",
+					"class": "bg-red-700 text-red-100 font-medium",
+					"icon": "ic:round-priority-high"
+				}
+			],
+			"component": "TableCellsMultiValue",
+			"display_type": "stage"
+		},
+		{
+			"name": "Tags",
+			"path": "tags",
+			"type": "multi-select",
+			"filter": true,
+			"is_add": false,
+			"is_update": true,
+			"is_visible": true,
+			"update_many": true,
+			"optionsParentClass": "flex flex-row-reverse justify-end gap-1",
+			"options": [
+				{
+					"name": "Design",
+					"value": "design",
+					"class": "bg-blue-700 text-blue-100 font-medium",
+					"icon": "ic:round-brush"
+				},
+				{
+					"name": "Client",
+					"value": "client",
+					"class": "bg-green-700 text-green-100 font-medium",
+					"icon": "ic:round-handshake"
+				},
+				{
+					"name": "Engineering",
+					"value": "engineering",
+					"class": "bg-purple-700 text-purple-100 font-medium",
+					"icon": "ic:round-code"
+				},
+				{
+					"name": "Marketing",
+					"value": "marketing",
+					"class": "bg-orange-700 text-orange-100 font-medium",
+					"icon": "ic:round-campaign"
+				},
+				{
+					"name": "Urgent",
+					"value": "urgent",
+					"class": "bg-red-700 text-red-100 font-medium",
+					"icon": "ic:round-warning"
+				}
+			],
+			"component": "TableCellsMultiValue",
+			"display_type": "stage"
+		},
+		{
+			"name": "Created by",
+			"type": "text",
+			"path": "createdBy.name",
+			"is_add": false,
+			"is_update": false,
+			"is_visible": true,
+			"image_field": "createdBy.avatar",
+			"component": "TableCellsPeople"
+		},
+		{
+			"name": "Created at",
+			"type": "date",
+			"path": "createdAt",
+			"sort": true,
+			"is_add": false,
+			"is_update": false,
+			"is_visible": true,
+			"date_format": "MMM DD YYYY",
+			"component": "TableCellsDate"
+		}
+	],
+	"tab_headers": {
+		"notes": {
+			"type": "notes",
+			"header": {
+				"name": "Notes",
+				"type": "text",
+				"path": "notes",
+				"attachment": true,
+				"table_view": true,
+				"is_update": true,
+				"is_visible": true,
+				"component": "TableCellsDefault"
+			}
+		},
+		"history": {
+			"type": "history",
+			"header": {
+				"name": "History",
+				"type": "text",
+				"path": "history",
+				"table_view": false,
+				"is_update": false,
+				"is_visible": true,
+				"component": "TableCellsDefault"
+			}
+		}
+	},
+	"roles": [
+		{
+			"name": "superadmin",
+			"read": true,
+			"write": true,
+			"insert": true,
+			"delete": true,
+			"search": true
+		},
+		{
+			"name": "admin",
+			"read": true,
+			"write": true,
+			"insert": true,
+			"delete": true,
+			"search": true
+		},
+		{
+			"name": "team",
+			"read": true,
+			"write": false,
+			"insert": false,
+			"delete": false,
+			"search": false
+		}
+	]
+}
