@@ -1,6 +1,24 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+@theme {
+	--color-prime-50: #fefce8;
+	--color-prime-100: #fef9c3;
+	--color-prime-200: #fef08a;
+	--color-prime-300: #fde047;
+	--color-prime-400: #faca15;
+	--color-prime-500: #eab308;
+	--color-prime-600: #ca8a04;
+	--color-prime-700: #a16207;
+	--color-prime-800: #854d0e;
+	--color-prime-900: #713f12;
+	--color-prime-950: #422006;
+
+	--shadow-spread: 0 0 0 15px;
+}
+
+@source inline("{bg,text}-{red,blue,green,yellow,gray,pink,purple,orange,amber,teal,cyan}-{100,200,300,400,500,600,700,800,900,950}");
+@source inline("text-{white,black} bg-{white,black,transparent} rounded-full font-{medium,semibold}");
 
 :root {
 	/* ---- Primitive tokens — the actual colors ---- */
@@ -103,11 +121,19 @@
 }
 
 .primary-gradient-tr-to-bl {
-	@apply bg-gradient-to-tr from-primary-400 via-primary-500 to-primary-700 enabled:hover:bg-gradient-to-bl transition-all;
+	@apply bg-gradient-to-tr from-orange-400 via-orange-500 to-orange-700 transition-all;
+
+	&:hover:enabled {
+		@apply bg-gradient-to-bl;
+	}
 }
 
 .primary-gradient-bl-to-tr {
-	@apply bg-gradient-to-bl from-primary-400 via-primary-500 to-primary-700 enabled:hover:bg-gradient-to-tr transition-all;
+	@apply bg-gradient-to-bl from-orange-400 via-orange-500 to-orange-700 transition-all;
+
+	&:hover:enabled {
+		@apply bg-gradient-to-tr;
+	}
 }
 
 html {
@@ -115,7 +141,7 @@ html {
 }
 
 .router-link-exact-active {
-	@apply text-gray-50 bg-primary-500 enabled:hover:text-white;
+	@apply text-gray-50 bg-orange-500 hover:text-white;
 }
 
 .main-container {
@@ -155,7 +181,7 @@ html {
 	background: var(--input-bg);
 	border: 1px solid var(--input-border);
 	color: var(--input-text);
-	@apply !ring-0 block w-full outline-none transition-all rounded-lg;
+	@apply ring-0! block w-full outline-none transition-all rounded-lg;
 }
 
 .input-box:focus,
@@ -205,10 +231,12 @@ html {
 	border: none;
 	border-bottom: 2px solid var(--input-border);
 	color: var(--input-text);
-	@apply sm:text-sm focus:ring-0 block w-full p-2.5 outline-none transition-all;
+	@apply sm:text-sm block w-full p-2.5 outline-none transition-all;
 }
 
 .input-box-outline:focus {
+	outline: none;
+	box-shadow: none;
 	border-bottom-color: var(--input-focus-border);
 }
 
@@ -225,8 +253,10 @@ html {
 
 /* Semantic Input Variants */
 .input-box-success {
-	@apply input-box;
-	border-color: var(--input-border-success) !important;
+	background: var(--input-bg);
+	border: 1px solid var(--input-border-success);
+	color: var(--input-text);
+	@apply ring-0! block w-full outline-none transition-all rounded-lg sm:text-base text-sm px-3 py-2;
 }
 .input-box-success:focus {
 	border-color: var(--input-border-success);
@@ -234,8 +264,10 @@ html {
 }
 
 .input-box-error {
-	@apply input-box;
-	border-color: var(--input-border-error) !important;
+	background: var(--input-bg);
+	border: 1px solid var(--input-border-error);
+	color: var(--input-text);
+	@apply ring-0! block w-full outline-none transition-all rounded-lg sm:text-base text-sm px-3 py-2;
 }
 .input-box-error:focus {
 	border-color: var(--input-border-error);
@@ -243,8 +275,10 @@ html {
 }
 
 .input-box-warning {
-	@apply input-box;
-	border-color: var(--input-border-warning) !important;
+	background: var(--input-bg);
+	border: 1px solid var(--input-border-warning);
+	color: var(--input-text);
+	@apply ring-0! block w-full outline-none transition-all rounded-lg sm:text-base text-sm px-3 py-2;
 }
 .input-box-warning:focus {
 	border-color: var(--input-border-warning);
@@ -255,12 +289,14 @@ html {
 .input-file-type {
 	background: var(--input-bg);
 	color: var(--input-text);
-	@apply relative block w-full focus:outline-none border-0 form-input rounded-lg
-  px-2.5 pl-0 py-0 ring-1 ring-inset focus:ring-2;
-	ring-color: var(--input-border);
+	border: 1px solid var(--input-border);
+	border-radius: 0.5rem;
+	box-shadow: 0 0 0 1px var(--input-border);
+	@apply relative block w-full focus:outline-none px-2.5 pl-0 py-0;
 }
 .input-file-type:focus {
-	ring-color: var(--input-focus-border);
+	box-shadow: 0 0 0 2px var(--input-focus-border);
+	outline: none;
 }
 .input-file-type::placeholder {
 	color: var(--input-text-placeholder);
@@ -278,46 +314,57 @@ html {
 
 /* Base Button Styles */
 .button-base {
-	@apply inline-flex items-center justify-center h-fit gap-1 text-center 
-  transition-all duration-300 ease-in-out text-nowrap box-border border 
-  border-transparent px-3 py-2 rounded-lg sm:text-base text-sm font-semibold 
+	@apply inline-flex items-center justify-center h-fit gap-1 text-center
+  transition-all duration-300 ease-in-out whitespace-nowrap box-border border
+  border-transparent px-3 py-2 rounded-lg sm:text-base text-sm font-semibold
   disabled:opacity-70 disabled:cursor-not-allowed;
 }
 
 .button-base-sm {
-	@apply inline-flex items-center justify-center h-fit gap-1 text-center 
-  transition-all duration-300 ease-in-out text-nowrap box-border border 
+	@apply inline-flex items-center justify-center h-fit gap-1 text-center
+  transition-all duration-300 ease-in-out whitespace-nowrap box-border border
   border-transparent px-3 py-1 rounded-lg text-sm font-medium;
 }
 
 /* Primary */
-.button-primary {
+.button-orange {
 	color: white;
-	@apply focus:ring-4 focus:outline-none focus:ring-primary-200 font-semibold border-transparent;
+	@apply focus:ring-4 focus:outline-none focus:ring-orange-200 font-semibold border-transparent;
 }
 
-.primary-button {
-	@apply button-base button-primary primary-gradient-tr-to-bl;
+.orange-button {
+	@apply inline-flex items-center justify-center h-fit gap-1 text-center
+  transition-all duration-300 ease-in-out whitespace-nowrap box-border border
+  border-transparent px-3 py-2 rounded-lg sm:text-base text-sm font-semibold
+  disabled:opacity-70 disabled:cursor-not-allowed
+  bg-gradient-to-tr from-orange-400 via-orange-500 to-orange-700
+  focus:ring-4 focus:outline-none focus:ring-orange-200 font-semibold border-transparent;
+	color: white;
+
+	&:hover:enabled {
+		@apply bg-gradient-to-bl;
+	}
 }
-.primary-button-sm {
-	@apply button-base-sm button-primary primary-gradient-bl-to-tr;
+
+.orange-button-sm {
+	@apply inline-flex items-center justify-center h-fit gap-1 text-center
+  transition-all duration-300 ease-in-out whitespace-nowrap box-border border
+  border-transparent px-3 py-1 rounded-lg text-sm font-medium
+  bg-gradient-to-bl from-orange-400 via-orange-500 to-orange-700
+  focus:ring-4 focus:outline-none focus:ring-orange-200 border-transparent;
+	color: white;
+
+	&:hover:enabled {
+		@apply bg-gradient-to-tr;
+	}
 }
 
 /* Secondary */
-.button-secondary {
-	background: var(--btn-secondary-bg);
-	color: var(--btn-secondary-text);
-	border-color: var(--btn-secondary-border);
-}
-.button-secondary:hover:not(:disabled) {
-	background: var(--btn-secondary-bg-hover);
-	border-color: var(--btn-secondary-border-hover);
-}
-
 .secondary-button {
-	@apply button-base;
-}
-.secondary-button {
+	@apply inline-flex items-center justify-center h-fit gap-1 text-center
+  transition-all duration-300 ease-in-out whitespace-nowrap box-border border
+  border-transparent px-3 py-2 rounded-lg sm:text-base text-sm font-semibold
+  disabled:opacity-70 disabled:cursor-not-allowed;
 	background: var(--btn-secondary-bg);
 	color: var(--btn-secondary-text);
 	border-color: var(--btn-secondary-border);
@@ -327,9 +374,9 @@ html {
 }
 
 .secondary-button-sm {
-	@apply button-base-sm;
-}
-.secondary-button-sm {
+	@apply inline-flex items-center justify-center h-fit gap-1 text-center
+  transition-all duration-300 ease-in-out whitespace-nowrap box-border border
+  border-transparent px-3 py-1 rounded-lg text-sm font-medium;
 	background: var(--btn-secondary-bg);
 	color: var(--btn-secondary-text);
 	border-color: var(--btn-secondary-border);
@@ -340,9 +387,10 @@ html {
 
 /* Outline Secondary */
 .secondary-button-outline {
-	@apply button-base;
-}
-.secondary-button-outline {
+	@apply inline-flex items-center justify-center h-fit gap-1 text-center
+  transition-all duration-300 ease-in-out whitespace-nowrap box-border border
+  border-transparent px-3 py-2 rounded-lg sm:text-base text-sm font-semibold
+  disabled:opacity-70 disabled:cursor-not-allowed;
 	background: transparent;
 	color: var(--btn-secondary-text);
 	border-color: var(--btn-secondary-border);
@@ -353,9 +401,9 @@ html {
 }
 
 .secondary-button-sm-outline {
-	@apply button-base-sm;
-}
-.secondary-button-sm-outline {
+	@apply inline-flex items-center justify-center h-fit gap-1 text-center
+  transition-all duration-300 ease-in-out whitespace-nowrap box-border border
+  border-transparent px-3 py-1 rounded-lg text-sm font-medium;
 	background: transparent;
 	color: var(--btn-secondary-text);
 	border-color: var(--btn-secondary-border);
@@ -367,7 +415,10 @@ html {
 
 /* Ghost */
 .ghost-button {
-	@apply button-base border-transparent;
+	@apply inline-flex items-center justify-center h-fit gap-1 text-center
+  transition-all duration-300 ease-in-out whitespace-nowrap box-border border
+  border-transparent px-3 py-2 rounded-lg sm:text-base text-sm font-semibold
+  disabled:opacity-70 disabled:cursor-not-allowed;
 	color: var(--btn-ghost-text);
 }
 .ghost-button:hover:not(:disabled) {
@@ -376,7 +427,9 @@ html {
 }
 
 .ghost-button-sm {
-	@apply button-base-sm border-transparent;
+	@apply inline-flex items-center justify-center h-fit gap-1 text-center
+  transition-all duration-300 ease-in-out whitespace-nowrap box-border border
+  border-transparent px-3 py-1 rounded-lg text-sm font-medium;
 	color: var(--btn-ghost-text);
 }
 .ghost-button-sm:hover:not(:disabled) {
@@ -386,7 +439,10 @@ html {
 
 /* Danger */
 .danger-button {
-	@apply button-base;
+	@apply inline-flex items-center justify-center h-fit gap-1 text-center
+  transition-all duration-300 ease-in-out whitespace-nowrap box-border border
+  border-transparent px-3 py-2 rounded-lg sm:text-base text-sm font-semibold
+  disabled:opacity-70 disabled:cursor-not-allowed;
 	background: var(--btn-danger-bg);
 	color: var(--btn-danger-text);
 	border-color: var(--btn-danger-border);
@@ -396,7 +452,9 @@ html {
 }
 
 .danger-button-sm {
-	@apply button-base-sm;
+	@apply inline-flex items-center justify-center h-fit gap-1 text-center
+  transition-all duration-300 ease-in-out whitespace-nowrap box-border border
+  border-transparent px-3 py-1 rounded-lg text-sm font-medium;
 	background: var(--btn-danger-bg);
 	color: var(--btn-danger-text);
 	border-color: var(--btn-danger-border);
@@ -407,7 +465,10 @@ html {
 
 /* Warning */
 .warning-button {
-	@apply button-base;
+	@apply inline-flex items-center justify-center h-fit gap-1 text-center
+  transition-all duration-300 ease-in-out whitespace-nowrap box-border border
+  border-transparent px-3 py-2 rounded-lg sm:text-base text-sm font-semibold
+  disabled:opacity-70 disabled:cursor-not-allowed;
 	background: var(--btn-warning-bg);
 	color: var(--btn-warning-text);
 	border-color: var(--btn-warning-border);
@@ -417,7 +478,9 @@ html {
 }
 
 .warning-button-sm {
-	@apply button-base-sm;
+	@apply inline-flex items-center justify-center h-fit gap-1 text-center
+  transition-all duration-300 ease-in-out whitespace-nowrap box-border border
+  border-transparent px-3 py-1 rounded-lg text-sm font-medium;
 	background: var(--btn-warning-bg);
 	color: var(--btn-warning-text);
 	border-color: var(--btn-warning-border);
@@ -428,7 +491,10 @@ html {
 
 /* Success */
 .success-button {
-	@apply button-base;
+	@apply inline-flex items-center justify-center h-fit gap-1 text-center
+  transition-all duration-300 ease-in-out whitespace-nowrap box-border border
+  border-transparent px-3 py-2 rounded-lg sm:text-base text-sm font-semibold
+  disabled:opacity-70 disabled:cursor-not-allowed;
 	background: var(--btn-success-bg);
 	color: var(--btn-success-text);
 	border-color: var(--btn-success-border);
@@ -438,7 +504,9 @@ html {
 }
 
 .success-button-sm {
-	@apply button-base-sm;
+	@apply inline-flex items-center justify-center h-fit gap-1 text-center
+  transition-all duration-300 ease-in-out whitespace-nowrap box-border border
+  border-transparent px-3 py-1 rounded-lg text-sm font-medium;
 	background: var(--btn-success-bg);
 	color: var(--btn-success-text);
 	border-color: var(--btn-success-border);
@@ -448,7 +516,10 @@ html {
 }
 
 .black-button {
-	@apply button-base;
+	@apply inline-flex items-center justify-center h-fit gap-1 text-center
+  transition-all duration-300 ease-in-out whitespace-nowrap box-border border
+  border-transparent px-3 py-2 rounded-lg sm:text-base text-sm font-semibold
+  disabled:opacity-70 disabled:cursor-not-allowed;
 	background: var(--btn-secondary-bg);
 	color: var(--btn-secondary-text);
 }
@@ -457,7 +528,9 @@ html {
 }
 
 .black-button-sm {
-	@apply button-base-sm;
+	@apply inline-flex items-center justify-center h-fit gap-1 text-center
+  transition-all duration-300 ease-in-out whitespace-nowrap box-border border
+  border-transparent px-3 py-1 rounded-lg text-sm font-medium;
 	background: var(--btn-secondary-bg);
 	color: var(--btn-secondary-text);
 }
@@ -466,7 +539,10 @@ html {
 }
 
 .white-button {
-	@apply button-base;
+	@apply inline-flex items-center justify-center h-fit gap-1 text-center
+  transition-all duration-300 ease-in-out whitespace-nowrap box-border border
+  border-transparent px-3 py-2 rounded-lg sm:text-base text-sm font-semibold
+  disabled:opacity-70 disabled:cursor-not-allowed;
 	background: var(--input-bg);
 	color: var(--text-description);
 	border-color: var(--btn-secondary-border);
@@ -476,7 +552,9 @@ html {
 }
 
 .white-button-sm {
-	@apply button-base-sm;
+	@apply inline-flex items-center justify-center h-fit gap-1 text-center
+  transition-all duration-300 ease-in-out whitespace-nowrap box-border border
+  border-transparent px-3 py-1 rounded-lg text-sm font-medium;
 	background: var(--input-bg);
 	color: var(--text-description);
 	border-color: var(--btn-secondary-border);
@@ -487,7 +565,11 @@ html {
 
 /* Outline Danger */
 .secondary-button-outline-danger {
-	@apply secondary-button-outline;
+	@apply inline-flex items-center justify-center h-fit gap-1 text-center
+  transition-all duration-300 ease-in-out whitespace-nowrap box-border border
+  border-transparent px-3 py-2 rounded-lg sm:text-base text-sm font-semibold
+  disabled:opacity-70 disabled:cursor-not-allowed;
+	background: transparent;
 	color: var(--btn-danger-text);
 	border-color: var(--btn-danger-border);
 }

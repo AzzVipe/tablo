@@ -23,14 +23,20 @@ export default defineNuxtConfig({
 		dirs: ["~/components"],
 	},
 
-	modules: ["@pinia/nuxt", "@nuxt/ui"],
-
-	colorMode: {
-		preference: "light",
-		fallback: "light",
-		classSuffix: "-mode",
-		storageKey: "tablo-theme",
-	},
+	modules: [
+		"@pinia/nuxt",
+		[
+			"@nuxt/ui",
+			{
+				colorMode: {
+					preference: "light",
+					fallback: "light",
+					classSuffix: "-mode",
+					storageKey: "tablo-theme",
+				},
+			},
+		],
+	],
 
 	compatibilityDate: "2025-02-02",
 });
