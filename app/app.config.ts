@@ -33,7 +33,7 @@ export default defineAppConfig({
 		dropdownMenu: {
 			slots: {
 				content:
-					"bg-[var(--input-bg)] ring-1 ring-[var(--input-border)] divide-[var(--input-border)] shadow-none",
+					"bg-[var(--input-bg)] ring-1 ring-[var(--input-border)] divide-[var(--input-border)] shadow-none !z-20",
 				item: "cursor-pointer px-3 py-2 text-[var(--text-description)] data-highlighted:bg-[var(--btn-secondary-bg-hover)] data-highlighted:text-[var(--text-subtitle)] data-disabled:cursor-not-allowed data-disabled:opacity-50",
 				itemLeadingIcon:
 					"text-[var(--text-description)] group-data-highlighted/item:text-[var(--text-subtitle)]",
@@ -67,7 +67,7 @@ export default defineAppConfig({
 			slots: {
 				overlay: "bg-black/10 backdrop-blur-none",
 				content:
-					"bg-[var(--page-bg)] ring-1 ring-black !max-w-[45vw] max-2xl:!max-w-[50vw] max-xl:!max-w-[66vw] max-lg:!max-w-[50vw] max-md:!max-w-[55vw] max-sm:!max-w-[80vw] !z-30",
+					"bg-[var(--page-bg)] ring-1 ring-black !max-w-[45vw] max-2xl:!max-w-[50vw] max-xl:!max-w-[66vw] max-lg:!max-w-[50vw] max-md:!max-w-[55vw] max-sm:!max-w-[80vw] !z-10",
 			},
 		},
 
@@ -148,14 +148,14 @@ export default defineAppConfig({
 		tooltip: {
 			slots: {
 				content:
-					"bg-[var(--sidebar-bg)] text-[var(--text-description)] ring-1 ring-[var(--input-border)] font-medium text-xs",
+					"bg-[var(--sidebar-bg)] text-[var(--text-description)] ring-1 ring-[var(--input-border)] font-medium text-xs z-50",
 				arrow: "fill-[var(--sidebar-bg)]",
 			},
 		},
 
 		toast: {
 			slots: {
-				root: "bg-[var(--input-bg)] ring-1 ring-[var(--input-border)]",
+				root: "bg-[var(--input-bg)] ring-1 ring-[var(--input-border)] z-100",
 			},
 			defaultVariants: {
 				color: "success",
