@@ -133,56 +133,42 @@
 		dropdownOptions.value,
 		props.header
 	);
+
+	const selectUi = computed(() => ({
+		item: "!p-0",
+		base: variantStyles.value.selectClass,
+		itemLeadingIcon: variantStyles.value.iconSize,
+	}));
 </script>
 
 <template>
 	<USelectMenu
-		:ui="{
-			size: variantStyles.selectSize,
-			icon: { size: variantStyles.iconSize },
-		}"
-		:selectClass="variantStyles.selectClass"
-		:uiMenu="uiMenuValue"
-		clear-search-on-close
 		v-model="labels"
 		by="id"
 		name="labels"
-		:options="dropdownOptions"
-		option-attribute="name"
+		label-key="name"
+		:items="dropdownOptions"
+		:ui="selectUi"
+		:content="uiMenuValue"
+		:search-input="true"
+		:required="config.required"
+		:placeholder="`Search for ${header.name}`"
 		multiple
-		searchable
 		creatable
-		:required="config.required">
-		<template #label>
-			<div :class="variantStyles.labelClass">
-				<template v-if="labels.length">
-					<span class="ml-3 truncate w-fit">
-						{{ labels.map((l) => l.name).join(", ") }}
-					</span>
-				</template>
-				<template v-else>
-					<span class="text-[var(--input-text-placeholder)]">
-						Select {{ header.name }}
-					</span>
-				</template>
-			</div>
-		</template>
-
-		<template #option="{ option }">
-			<div
-				class="!font-normal w-full rounded-md py-1.5 px-1.5"
-				:class="option.class"
-				:style="getOptionColor(option, header)">
+		clear-search-on-close>
+		<template #item="{ item }">
+			<div class="font-normal w-full p-2 rounded-md" :class="item.class">
 				<div class="flex gap-1 items-center" :class="optionWrapperClass">
-					<span :class="variantStyles.optionClass">{{ option.name }}</span>
-					<UIcon v-if="option?.icon" :name="option.icon" class="w-4 h-4" />
+					<span :class="variantStyles.optionClass">{{ item.name }}</span>
+					<UIcon v-if="item?.icon" :name="item.icon" class="size-4" />
+					<!-- TODO: Checked icon -->
 				</div>
 			</div>
 		</template>
 
-		<template #option-create="{ option }">
-			<span class="flex-shrink-0">New option:</span>
-			<span class="block truncate">{{ option.name }}</span>
+		<template #item-create="{ item }">
+			<span class="shrink-0">New option:</span>
+			<span class="block truncate">{{ item.name }}</span>
 		</template>
 	</USelectMenu>
 </template>
