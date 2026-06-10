@@ -38,6 +38,14 @@ export default defineAppConfig({
 				itemLeadingIcon:
 					"text-[var(--text-description)] group-data-highlighted/item:text-[var(--text-subtitle)]",
 			},
+			compoundVariants: [
+				{
+					color: "neutral",
+					class: {
+						item: "p-2",
+					},
+				},
+			],
 		},
 
 		popover: {
@@ -51,13 +59,15 @@ export default defineAppConfig({
 			slots: {
 				overlay: "fixed inset-0 bg-black/60",
 				content:
-					"bg-[var(--input-bg)] ring-1 ring-[var(--input-border)] shadow-none",
+					"bg-[var(--input-bg)] !ring-1 !ring-[var(--input-border)] !divide-[var(--input-border)] shadow-none",
 			},
 		},
 
 		slideover: {
 			slots: {
-				content: "bg-[var(--page-bg)] ring-1 ring-[var(--input-border)]",
+				overlay: "bg-black/10 backdrop-blur-none",
+				content:
+					"bg-[var(--page-bg)] ring-1 ring-black !max-w-[45vw] max-2xl:!max-w-[50vw] max-xl:!max-w-[66vw] max-lg:!max-w-[50vw] max-md:!max-w-[55vw] max-sm:!max-w-[80vw] !z-30",
 			},
 		},
 
@@ -78,9 +88,11 @@ export default defineAppConfig({
 
 		selectMenu: {
 			slots: {
+				placeholder: "text-[var(--input-text-placeholder)]",
 				content:
 					"bg-[var(--input-bg)] ring-1 ring-[var(--input-border)] shadow-none",
-				item: "text-[var(--text-description)] hover:bg-[var(--card-hover)] data-highlighted:bg-[var(--card-hover)] data-highlighted:text-[var(--text-subtitle)] data-selected:text-[var(--text-subtitle)] data-selected:bg-[var(--card-hover)]",
+				group: "flex flex-col gap-1",
+				item: "rounded-md text-[var(--text-description)] hover:bg-[var(--card-hover)] data-highlighted:bg-[var(--card-hover)] data-highlighted:text-[var(--text-subtitle)] data-selected:text-[var(--text-subtitle)] data-selected:bg-[var(--card-hover)]",
 				itemLeadingIcon:
 					"text-[var(--text-description)] group-data-highlighted/item:text-[var(--text-subtitle)]",
 				input:
