@@ -44,31 +44,15 @@
 
 <template>
 	<UModal
-		v-model="updateModal"
+		v-if="recordData"
+		title="Edit Record"
+		v-model:open="updateModal"
 		:ui="{
-			width: 'w-full !max-w-4xl',
-			overlay: { background: 'bg-black/50' },
+			content: 'w-full !max-w-4xl',
+			overlay: 'bg-black/50',
 		}">
-		<!-- Modal content -->
-		<div
-			id="updateRecordModal"
-			class="relative p-4 rounded-lg shadow sm:p-5 text-white">
-			<!-- Modal header -->
-			<div class="flex justify-between items-center pb-4 mb-4 rounded-t">
-				<h3 class="text-xl font-semibold text-[var(--text-title)]">
-					Edit Record
-				</h3>
-				<button
-					@click="updateModal = false"
-					type="button"
-					class="ghost-button-sm !p-1">
-					<UIcon name="ic:round-close" class="w-5 h-5" />
-					<span class="sr-only">Close modal</span>
-				</button>
-			</div>
-			<!-- Modal body -->
+		<template #body>
 			<form
-				v-if="recordData"
 				id="update-record-form"
 				v-auto-focus
 				autocomplete="off"
@@ -90,6 +74,6 @@
 				</div>
 				<button class="primary-button">Update record</button>
 			</form>
-		</div>
+		</template>
 	</UModal>
 </template>

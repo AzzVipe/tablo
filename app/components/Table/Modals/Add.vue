@@ -6,7 +6,7 @@
 	const addModalOpen = ref(false);
 
 	const emit = defineEmits(["addRecord"]);
-	
+
 	const { modalId, headers, useStore, btnStyle, modalTitle } = defineProps([
 		"modalId",
 		"btnStyle",
@@ -196,39 +196,24 @@
 
 <template>
 	<div>
-		<button
-			@click="addModalOpen = true"
-			:class="[
-				btnStyle ? btnStyle : 'secondary-button',
-				addModalOpen ? defaultActStyles : '',
-			]">
-			<UIcon name="ic:round-plus" class="w-5 h-5" />
-			<span class="max-sm:hidden">New</span>
-		</button>
 		<UModal
-			v-model="addModalOpen"
+			:title="modalTitle ? modalTitle : 'New Record'"
+			v-model:open="addModalOpen"
 			:ui="{
-				width: 'w-full !max-w-4xl',
-				overlay: { background: 'bg-black/50' },
+				content: 'w-full !max-w-4xl',
+				overlay: 'bg-black/50',
 			}">
-			<!-- Modal content -->
-			<div
-				id="addRecordModal"
-				class="relative p-4 rounded-lg shadow sm:p-5 text-white">
-				<!-- Modal header -->
-				<div class="flex justify-between items-center pb-4 mb-4 rounded-t">
-					<h3 class="text-xl font-semibold text-[var(--text-title)]">
-						{{ modalTitle ? modalTitle : "New Record" }}
-					</h3>
-					<button
-						@click="addModalOpen = false"
-						type="button"
-						class="ghost-button-sm !p-1">
-						<UIcon name="ic:round-close" class="w-5 h-5" />
-						<span class="sr-only">Close modal</span>
-					</button>
-				</div>
-				<!-- Modal body -->
+			<button
+				@click="addModalOpen = true"
+				:class="[
+					btnStyle ? btnStyle : 'secondary-button',
+					addModalOpen ? defaultActStyles : '',
+				]">
+				<UIcon name="ic:round-plus" class="w-5 h-5" />
+				<span class="max-sm:hidden">New</span>
+			</button>
+			<!-- Modal body -->
+			<template #body>
 				<form
 					v-auto-focus
 					autocomplete="off"
@@ -249,9 +234,7 @@
 					</div>
 					<button class="primary-button">Add record</button>
 				</form>
-			</div>
-			<!-- </div>
-		</div> -->
+			</template>
 		</UModal>
 	</div>
 </template>

@@ -9,7 +9,7 @@
 			required: true,
 		},
 	});
-	
+
 	const emit = defineEmits(["update", "delete"]);
 
 	const items = [
@@ -17,7 +17,7 @@
 			{
 				label: "Edit",
 				icon: "ic:round-mode-edit-outline",
-				click: () => {
+				onSelect: () => {
 					emit("update");
 				},
 				disabled: !hasUpdate,
@@ -27,7 +27,7 @@
 			{
 				label: "Delete",
 				icon: "ic:round-delete",
-				click: () => {
+				onSelect: () => {
 					emit("delete");
 				},
 				disabled: !hasDelete,
@@ -37,20 +37,15 @@
 </script>
 
 <template>
-	<UDropdown
+	<UDropdownMenu
 		:items="items"
 		:ui="{
-			padding: 'p-1',
-			divide: 'divide-none',
-			width: 'w-40',
-			item: {
-				disabled: 'cursor-text select-text',
-				padding: 'px-2 py-1.5',
-			},
+			content: 'p-1 divide-none w-40',
+			item: 'cursor-text select-text px-2 py-1.5',
 		}"
-		:popper="{ placement: 'left-start' }">
+		:content="{ side: 'left', align: 'start' }">
 		<UButton
-			color="gray"
+			color="neutral"
 			variant="ghost"
 			size="sm"
 			icon="ic:round-more-horiz"
@@ -61,9 +56,7 @@
 				{{ item.label }}
 			</span>
 
-			<UIcon
-				:name="item.icon"
-				class="flex-shrink-0 h-6 w-6 text-red-500 ms-auto" />
+			<UIcon :name="item.icon" class="shrink-0 size-6 text-red-500 ms-auto" />
 		</template>
-	</UDropdown>
+	</UDropdownMenu>
 </template>

@@ -172,20 +172,12 @@
 	</ClientOnly>
 
 	<UModal
-		v-model="tableStateModal"
+		v-model:open="tableStateModal"
 		:ui="{
 			width: 'w-full !max-w-md',
-			overlay: { background: 'bg-black/50' },
+			overlay: 'bg-black/50',
 		}">
-		<!-- Modal content -->
-		<div class="relative rounded-lg shadow">
-			<button
-				@click="tableStateModal = false"
-				type="button"
-				class="absolute top-3 right-2.5 ghost-button-sm !p-1">
-				<UIcon name="ic:round-close" class="w-5 h-5" />
-				<span class="sr-only">Close modal</span>
-			</button>
+		<template #content>
 			<div class="p-4">
 				<h3 class="mb-8 text-xl font-medium text-[var(--text-title)]">
 					Save current view
@@ -223,6 +215,6 @@
 					</button>
 				</form>
 			</div>
-		</div>
+		</template>
 	</UModal>
 </template>

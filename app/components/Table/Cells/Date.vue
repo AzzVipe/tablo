@@ -1,6 +1,6 @@
 <template>
 	<div class="flex items-center gap-2" :class="setColor(content)">
-		<Icon name="ic:round-calendar-month" size="24" />
+		<UIcon name="ic:round-calendar-month" size="24" />
 		<span>
 			{{ formatDate(content, header.date_format) }}
 		</span>
