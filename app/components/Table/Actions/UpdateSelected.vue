@@ -83,7 +83,7 @@
 				<span class="max-sm:hidden">Update All</span>
 			</TableActionsButton>
 
-			<template #panel>
+			<template #content>
 				<div class="grid grid-cols-1 gap-4 p-3">
 					<ul
 						class="grid grid-cols-2 max-sm:grid-cols-1 max-sm:gap-3 items-center gap-2 text-sm max-lg:flex-col max-lg:items-start">

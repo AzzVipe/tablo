@@ -21,7 +21,7 @@
 				<span class="max-sm:hidden">Group</span>
 			</TableActionsButton>
 
-			<template #panel>
+			<template #content>
 				<div class="bg-white divide-y divide-gray-100 px-2 w-28">
 					<div
 						v-if="grouped.active"

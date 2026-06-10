@@ -22,7 +22,7 @@
 				<span class="max-sm:hidden">Hide</span>
 			</TableActionsButton>
 
-			<template #panel>
+			<template #content>
 				<div>
 					<ul class="pl-2 py-2 pr-3 space-y-1 text-sm max-h-64 overflow-y-auto">
 						<h1 class="p-2 font-semibold text-[var(--text-title)]">
