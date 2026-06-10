@@ -12,9 +12,28 @@
 			class="input-box" />
 
 		<div class="flex flex-col gap-2 mt-4">
-			<h2 class="font-semibold ml-2 text-[var(--text-title)]">
-				{{ mentionsMap?.size }} mentions
-			</h2>
+			<UDropdownMenu
+				v-model:open="showDropdown"
+				:items="[filteredUsers]"
+				:ui="{ content: 'w-80 h-96' }"
+				:content="{ side: 'bottom', align: 'start' }">
+				<h2 class="font-semibold ml-2 text-[var(--text-title)]">
+					{{ mentionsMap?.size }} mentions
+				</h2>
+
+				<!-- Custom slot for dropdown items -->
+				<template #item="{ item }">
+					<slot name="dropdown-item" :item="item" :selectUser="selectUser">
+						<!-- Default style if no slot is passed -->
+						<div
+							class="flex flex-col px-3 py-2 cursor-pointer rounded-md"
+							@click="selectUser(item)">
+							@{{ item[props.mapLabel] }}
+						</div>
+					</slot>
+				</template>
+			</UDropdownMenu>
+
 			<div v-if="mentionsMap?.size > 0" class="flex flex-wrap gap-2">
 				<template v-for="[id, mention] in mentionsMap" :key="id">
 					<UTooltip text="Click to remove mention">
@@ -38,29 +57,6 @@
 				</template>
 			</div>
 		</div>
-
-		<UDropdown
-			v-model:open="showDropdown"
-			:items="[filteredUsers]"
-			:ui="{ width: 'w-80', height: 'h-96' }"
-			:popper="{ placement: 'bottom-start' }">
-			<!-- Trigger is hidden since we control open manually -->
-			<template #default>
-				<span class="hidden"></span>
-			</template>
-
-			<!-- Custom slot for dropdown items -->
-			<template #item="{ item }">
-				<slot name="dropdown-item" :item="item" :selectUser="selectUser">
-					<!-- Default style if no slot is passed -->
-					<div
-						class="flex flex-col px-3 py-2 cursor-pointer rounded-md h-"
-						@click="selectUser(item)">
-						@{{ item[props.mapLabel] }}
-					</div>
-				</slot>
-			</template>
-		</UDropdown>
 	</div>
 </template>
 

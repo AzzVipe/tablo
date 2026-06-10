@@ -31,191 +31,133 @@
 		);
 	}
 
-	// ---- Local state ----
-	const selected = ref(null);
-	const query = ref("");
-	const isMounted = ref(false);
-
 	const path = computed(() => getPathFromHeader(props.header));
 
-	// ---- Dropdown cache ----
-	const dropdownCache = useState(
-		`${props.config.prefix}-assign-dropdown-${path.value}`,
-		() => ({
-			options: [],
-			metadata: null,
-			isLoading: false,
-			lastFetched: null,
-		})
-	);
+	// ---- Fetch using useLazyFetch with custom store function ----
+	const {
+		data: options,
+		status,
+		execute,
+	} = await useLazyFetch(`assign-dropdown-${path.value}`, {
+		key: `${props.config.prefix}-assign-dropdown-${path.value}`,
+		transform: (res) => {
+			if (!res?.data) return [];
 
-	const safeSelected = computed({
-		get: () => selected.value ?? undefined,
-		set: (val) => {
-			selected.value = val ?? null;
+			return res.data.map((opt) => ({
+				...opt,
+				label: getValueByPath(opt, props.header.get_from_field),
+				value: getValueByPath(opt, props.header.get_from_value),
+			}));
 		},
+		$fetch: async () => {
+			if (!store) return null;
+
+			const res = await store.findRecords(
+				props.header.get_from_match || null,
+				props.header.get_from_sort || null,
+				{ metadata: true }
+			);
+
+			return res;
+		},
+		immediate: false,
 	});
 
-	const normalizeFromId = (val) => {
-		if (isNullOrUndefinedOrEmpty(val)) return null;
-
-		if (typeof val === "object") {
-			return val;
+	// ---- Lazy load on open ----
+	function onOpen(isOpen) {
+		if (isOpen && !options.value?.length) {
+			execute();
 		}
+	}
 
-		const temp = dropdownCache.value.options.find(
-			(opt) => getValueByPath(opt, props.header.get_from_value) === val
-		);
+	// ---- Normalize incoming modelValue to match item shape ----
+	const selected = computed({
+		get: () => {
+			if (isNullOrUndefinedOrEmpty(props.modelValue)) return undefined;
 
-		return {
-			[props.header.get_from_value]: val,
-			[props.header.get_from_field]: getValueByPath(
-				temp,
-				props.header.get_from_field
-			),
-			[props.header.get_from_image]: getValueByPath(
-				temp,
-				props.header.get_from_image
-			),
-		};
-	};
-
-	// ---- Fetch options ----
-	onMounted(async () => {
-		if (store && dropdownCache.value.options.length === 0) {
-			dropdownCache.value.isLoading = true;
-
-			try {
-				const res = await store.findRecords(
-					props.header.get_from_match || null,
-					props.header.get_from_sort || null,
-					{ metadata: true }
-				);
-
-				if (res) {
-					dropdownCache.value.options = res.data;
-					dropdownCache.value.metadata = res.metadata;
-					dropdownCache.value.lastFetched = new Date();
-				}
-			} catch (err) {
-				console.error("[AssignDropdown] Failed to fetch options:", err);
-			} finally {
-				dropdownCache.value.isLoading = false;
-			}
-		}
-
-		isMounted.value = true;
-	});
-
-	watch(
-		() => props.modelValue,
-		(val) => {
-			selected.value = normalizeFromId(val);
-		},
-		{ immediate: true }
-	);
-
-	watch(
-		() => getValueByPath(selected.value, props.header.get_from_value),
-		(newId) => {
-			if (!isMounted.value) return;
-
-			const currentId =
-				typeof props.modelValue === "object"
-					? getValueByPath(props.modelValue, props.header.get_from_value)
-					: props.modelValue;
-
-			if (newId === currentId) {
-				return;
-			}
-
-			if (isNullOrUndefinedOrEmpty(newId)) {
-				emit("update:modelValue", null);
-
-				return;
-			}
-
-			const value = props.header?.assign_data_using_object
-				? {
-						id: selected.value.id,
-						[props.header.get_from_value]: getValueByPath(
-							newVal,
-							props.header.get_from_value
-						),
-						[props.header.get_from_field]: getValueByPath(
-							newVal,
+			if (typeof props.modelValue === "object") {
+				return (
+					options.value?.find(
+						(opt) =>
+							getValueByPath(opt, props.header.get_from_value) ===
+							getValueByPath(props.modelValue, props.header.get_from_value)
+					) ?? {
+						label: getValueByPath(
+							props.modelValue,
 							props.header.get_from_field
 						),
-						[props.header.get_from_image]: getValueByPath(
-							newVal,
-							props.header.get_from_image
+						value: getValueByPath(
+							props.modelValue,
+							props.header.get_from_value
 						),
+					}
+				);
+			}
+
+			return (
+				options.value?.find((opt) => opt.value === props.modelValue) ?? {
+					label: props.modelValue,
+					value: props.modelValue,
+				}
+			);
+		},
+		set: (val) => {
+			if (isNullOrUndefinedOrEmpty(val)) {
+				emit("update:modelValue", null);
+				return;
+			}
+
+			const emitValue = props.header?.assign_data_using_object
+				? {
+						id: val.id,
+						[props.header.get_from_value]: val.value,
+						[props.header.get_from_field]: val.label,
+						[props.header.get_from_image]: val.avatar,
 				  }
-				: newId;
+				: val.value;
 
-			emit("update:modelValue", value);
-		}
-	);
+			emit("update:modelValue", emitValue);
+		},
+	});
 
-	const selectClass = computed(() =>
-		props.config.variant === "sm"
-			? "input-box-dropdown-sm"
-			: "input-box-dropdown"
-	);
-
-	const { variantStyles, uiMenuValue } = useDropdownStyles(
+	const { variantStyles, uiMenuValue, optionWrapperClass } = useDropdownStyles(
 		props.config.variant,
-		dropdownCache.value?.options,
+		options.value,
 		props.header
 	);
+
+	const selectUi = computed(() => ({
+		item: "!p-1.5 items-center",
+		base: variantStyles.value.selectClass,
+	}));
 </script>
 
 <template>
 	<USelectMenu
-		by="id"
-		searchable
-		v-model="safeSelected"
-		v-model:query="query"
-		clear-search-on-close
-		:ui="{
-			size: variantStyles.selectSize,
-			icon: { size: variantStyles.iconSize },
-		}"
-		:loading="dropdownCache.isLoading"
+		v-model="selected"
+		by="value"
+		:items="options ?? []"
+		:loading="status === 'pending'"
+		:content="uiMenuValue"
+		:ui="selectUi"
 		:debounce="300"
-		:multiple="false"
-		:trailing="true"
-		:options="dropdownCache.options"
 		:required="config.required"
-		:selectClass="selectClass"
-		:uiMenu="uiMenuValue"
 		:placeholder="`Search for ${header.name}`"
-		:option-attribute="header.get_from_field">
-		<template #label>
-			<div :class="variantStyles.labelClass">
-				<span v-if="selected" class="truncate">
-					{{ getValueByPath(selected, header.get_from_field) }}
-				</span>
-				<span v-else class="text-[var(--input-text-placeholder)]">
-					Search for {{ header.name }}
-				</span>
-			</div>
+		:search-input="true"
+		:multiple="false"
+		clear
+		clear-search-on-close
+		reset-model-value-on-clear
+		@update:open="onOpen">
+		<template #leading="{ modelValue }">
+			<UAvatar
+				v-if="modelValue"
+				:src="modelValue.avatar"
+				:alt="modelValue.label"
+				size="sm" />
 		</template>
-
-		<template #option="{ option: opt }">
-			<div
-				class="!font-normal w-full rounded-md py-1.5 px-1.5"
-				:class="opt.class">
-				<div class="flex gap-2 items-center">
-					<ImageWrapper
-						:src="getValueByPath(opt, header.get_from_image)"
-						:name="getValueByPath(opt, header.get_from_field)"
-						styles="w-7 h-7 rounded-full object-cover text-white text-sm font-medium flex-shrink-0" />
-					<span :class="variantStyles.optionClass" class="truncate">
-						{{ getValueByPath(opt, header.get_from_field) }}
-					</span>
-				</div>
-			</div>
+		<template #item-leading="{ item }">
+			<UAvatar v-if="item" :src="item.avatar" :alt="item.label" size="sm" />
 		</template>
 	</USelectMenu>
 </template>
