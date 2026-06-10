@@ -4,7 +4,7 @@
 			:href="content"
 			target="_blank"
 			class="primary-button-sm !rounded-full focus:ring-0 focus:outline-none w-fit">
-			<Icon name="ic:round-link" class="w-4 h-4" />
+			<UIcon name="ic:round-link" class="w-4 h-4" />
 
 			Open link
 		</a>
