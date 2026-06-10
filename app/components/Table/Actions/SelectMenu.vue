@@ -12,11 +12,7 @@
 	const emit = defineEmits(["update:modelValue", "change"]);
 
 	const uiStyle = {
-		color: {
-			white: {
-				outline: "shadow-none",
-			},
-		},
+		item: "shadow-none",
 	};
 </script>
 
@@ -27,15 +23,14 @@
 		@change="emit('change')"
 		:placeholder="placeholder"
 		:ui="{ ...uiStyle, ...ui }"
-		:uiMenu="{ container: 'z-20 group', width: 'w-fit' }"
-		selectClass="input-box-dropdown-sm"
-		:options="options"
-		:option-attribute="optAttr"
-		:value-attribute="valAttr"
+		class="input-box-dropdown-sm"
+		:items="options"
+		:label-key="optAttr"
+		:value-key="valAttr"
 		required>
-		<template #option="{ option: opt }">
+		<template #item="{ item }">
 			<span class="whitespace-nowrap mr-1 pr-1">
-				{{ opt[optAttr] }}
+				{{ item[optAttr] }}
 			</span>
 		</template>
 	</USelectMenu>

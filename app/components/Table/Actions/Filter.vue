@@ -239,7 +239,7 @@
 				<span class="max-sm:hidden">Filter</span>
 			</TableActionsButton>
 
-			<template #panel>
+			<template #content>
 				<div class="p-3">
 					<form
 						@submit.prevent="filterHandler(true)"

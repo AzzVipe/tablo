@@ -39,7 +39,7 @@
 				<span class="max-sm:hidden">Sort</span>
 			</TableActionsButton>
 
-			<template #panel>
+			<template #content>
 				<div class="divide-y divide-gray-100">
 					<ul class="px-3 py-2 text-sm flex flex-col gap-1">
 						<template v-for="(header, i) in tableConfig.headers" :key="i">
