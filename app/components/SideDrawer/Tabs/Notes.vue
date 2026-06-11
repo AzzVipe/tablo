@@ -561,7 +561,7 @@
 									>
 								</UTooltip>
 
-								<template #panel>
+								<template #content>
 									<div class="flex items-center justify-center gap-4 p-4">
 										<ImageWrapper
 											:src="userMap[token.id]?.avatar"
