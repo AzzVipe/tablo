@@ -114,6 +114,7 @@
 			"get_from": "users",
 			"get_from_value": "id",
 			"get_from_field": "name",
+			"get_from_image": "avatar",
 			"unique_values": "assignedTo",
 			"component": "TableCellsMultiValue",
 			"display_type": "assign"

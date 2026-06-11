@@ -20,7 +20,7 @@
 		},
 		{
 			"name": "Organization",
-			"type": "select",
+			"type": "relation",
 			"path": "organization",
 			"sort": false,
 			"filter": true,
