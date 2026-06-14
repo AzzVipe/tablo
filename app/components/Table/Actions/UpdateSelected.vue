@@ -78,10 +78,11 @@
 <template>
 	<ClientOnly>
 		<UPopover v-model:open="isPopoverOpen" :ui="{ base: 'overflow-visible' }">
-			<TableActionsButton :popoverOpen="isPopoverOpen" label="Update selected">
-				<UIcon name="ic:outline-edit" class="w-6 h-6" />
-				<span class="max-sm:hidden">Update All</span>
-			</TableActionsButton>
+			<UButton
+				color="secondary"
+				variant="outline"
+				label="Update selected"
+				icon="ic:outline-edit" />
 
 			<template #content>
 				<div class="grid grid-cols-1 gap-4 p-3">
@@ -216,19 +217,19 @@
 								variant="sm" />
 						</li>
 					</ul>
-					<div class="flex gap-2 w-full">
-						<button
+					<div class="flex justify-center gap-2 w-full">
+						<UButton
 							@click="updateHandler()"
-							class="primary-button-sm flex-1 w-full">
-							<UIcon name="ic:baseline-check" class="w-4 h-4" />
-							Update
-						</button>
-						<button
+							label="Update"
+							icon="ic:baseline-check"
+							size="sm" />
+						<UButton
 							@click="resetHandler()"
-							class="secondary-button-sm flex-1 w-full">
-							<UIcon name="ic:round-close" class="w-4 h-4" />
-							Cancel
-						</button>
+							label="Cancel"
+							color="secondary"
+							variant="outline"
+							icon="ic:round-close"
+							size="sm" />
 					</div>
 				</div>
 			</template>

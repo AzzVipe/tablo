@@ -1,13 +1,10 @@
 <template>
 	<div class="flex items-center justify-center">
-		<a
-			:href="content"
+		<UButton
+			:to="content"
 			target="_blank"
-			class="primary-button-sm !rounded-full focus:ring-0 focus:outline-none w-fit">
-			<UIcon name="ic:round-link" class="w-4 h-4" />
-
-			Open link
-		</a>
+			icon="ic:round-link"
+			label="Open link" />
 	</div>
 </template>
 

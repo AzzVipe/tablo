@@ -68,13 +68,16 @@
 				<h3 class="text-sm font-medium text-[var(--text-description)]">
 					{{ config.title }}
 				</h3>
-				<button
+
+				<UButton
 					v-if="config.canEdit && !isEditing"
 					@click="editInit"
-					class="ghost-button-sm flex items-center gap-1.5 text-xs">
-					<UIcon name="ic:round-edit-note" class="w-4 h-4" />
-					Edit
-				</button>
+					label="Edit"
+					color="secondary"
+					variant="ghost"
+					size="sm"
+					icon="ic:round-edit-note">
+				</UButton>
 			</div>
 
 			<!-- Read view -->
@@ -113,13 +116,18 @@
 						@update="handleFieldUpdate($event)" />
 				</div>
 				<div class="flex gap-2">
-					<button type="submit" class="primary-button-sm">Update</button>
-					<button
-						type="button"
-						class="secondary-button-sm"
-						@click="isEditing = false">
-						Cancel
-					</button>
+					<UButton
+						type="submit"
+						color="primary"
+						variant="solid"
+						label="Update"
+						size="sm" />
+					<UButton
+						@click="isEditing = false"
+						color="secondary"
+						variant="outline"
+						label="Cancel"
+						size="sm" />
 				</div>
 			</form>
 		</div>

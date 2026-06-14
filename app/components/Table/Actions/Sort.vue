@@ -34,10 +34,11 @@
 		</template>
 
 		<UPopover v-model:open="isPopoverOpen" :ui="{ base: 'overflow-visible' }">
-			<TableActionsButton :popoverOpen="isPopoverOpen" label="sort">
-				<UIcon name="ic:round-swap-vert" class="w-5 h-5" />
-				<span class="max-sm:hidden">Sort</span>
-			</TableActionsButton>
+			<UButton
+				color="secondary"
+				variant="outline"
+				label="Sort"
+				icon="ic:round-swap-vert" />
 
 			<template #content>
 				<div class="divide-y divide-gray-100">

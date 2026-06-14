@@ -17,10 +17,11 @@
 		</template>
 
 		<UPopover v-model:open="isPopoverOpen">
-			<TableActionsButton :popoverOpen="isPopoverOpen" label="hide">
-				<UIcon name="ic:round-visibility-off" class="w-5 h-5" />
-				<span class="max-sm:hidden">Hide</span>
-			</TableActionsButton>
+			<UButton
+				color="secondary"
+				variant="outline"
+				label="Hide"
+				icon="ic:round-visibility-off" />
 
 			<template #content>
 				<div>
@@ -44,13 +45,19 @@
 						</li>
 					</ul>
 					<div
-						class="flex gap-1 justify-between text-gray-600 px-2 py-3 text-xs">
-						<button @click="hideAllTableTd" class="secondary-button-sm-outline">
-							Hide All
-						</button>
-						<button @click="showAllTableTd" class="secondary-button-sm-outline">
-							Show All
-						</button>
+						class="flex gap-2 justify-center text-gray-600 px-2 py-3 text-xs">
+						<UButton
+							@click="hideAllTableTd"
+							label="Hide All"
+							color="secondary"
+							variant="outline"
+							size="sm" />
+						<UButton
+							@click="showAllTableTd"
+							label="Show All"
+							color="secondary"
+							variant="outline"
+							size="sm" />
 					</div>
 				</div>
 			</template>

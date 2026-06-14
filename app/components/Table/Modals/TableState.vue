@@ -79,142 +79,124 @@
 		v-model="showConfirmModal"
 		@delete="deleteView"
 		:name="selectedView?.name" />
+	<UPopover v-model:open="tableStateDropdown">
+		<UFieldGroup>
+			<UButton
+				:label="activeTableState?.name ?? 'Table state'"
+				color="primary"
+				variant="solid"
+				icon="ic:baseline-turned-in-not"
+				class="rounded-full" />
+			<UTooltip text="Add new view">
+				<UButton
+					@click.stop="modalOpenHandler"
+					color="secondary"
+					variant="outline"
+					icon="ic:round-plus"
+					class="rounded-full">
+				</UButton>
+			</UTooltip>
+		</UFieldGroup>
 
-	<ClientOnly>
-		<UPopover v-model:open="tableStateDropdown">
-			<div class="primary-button !rounded-full !p-0 !pl-3 border-none">
-				<button type="button" class="flex items-center gap-1">
-					<UIcon
-						name="ic:baseline-turned-in-not"
-						class="w-5 h-5 font-semibold sm:hidden" />
-
-					<span class="max-sm:hidden">
+		<!-- Dropdown menu -->
+		<template #content>
+			<div class="rounded-md shadow w-fit text-sm">
+				<div
+					v-if="activeTableState"
+					class="flex justify-between items-center px-2 py-2 gap-2 text-[var(--card-text)]">
+					<h2 class="font-medium">
 						{{ activeTableState?.name ? activeTableState.name : "Table state" }}
-					</span>
-					<UIcon name="ic:round-expand-more" class="w-6 h-6 max-sm:hidden h-" />
-				</button>
-				<UTooltip text="Add new view">
-					<button
-						class="secondary-button !rounded-full !rounded-l-none"
-						@click.stop="modalOpenHandler">
-						<UIcon name="ic:round-plus" class="w-6 h-6 max-md:w-5 max-md:h-5" />
-					</button>
-				</UTooltip>
-			</div>
+					</h2>
 
-			<!-- Dropdown menu -->
-			<template #panel>
-				<div class="rounded-md shadow w-fit text-sm">
-					<div
-						v-if="activeTableState"
-						class="flex justify-between items-center px-2 py-2 gap-2 text-[var(--card-text)]">
-						<h2 class="font-medium">
-							{{
-								activeTableState?.name ? activeTableState.name : "Table state"
-							}}
-						</h2>
-
-						<UTooltip text="Remove view">
-							<UButton
-								@click="clearTableState(tableConfig, toggleDropdown)"
-								size="xl"
-								color="blue"
-								variant="link"
-								icon="ic:round-close"
-								class="p-0" />
-						</UTooltip>
-					</div>
-					<ul
-						v-if="tableStateList?.length > 0 && loadingState !== 'fetching'"
-						class="py-1 text-center">
-						<template v-for="item in tableStateList" :key="item.id">
-							<li
-								v-if="activeTableState?.id !== item.id"
-								class="px-2 py-1 cursor-pointer hover:bg-[var(--card-hover)] flex gap-2 items-center justify-between">
-								<button
-									@click="applyTableState(tableConfig, item, toggleDropdown)"
-									class="py-1.5 text-left font-medium w-full">
-									{{ item.name }}
-								</button>
-
-								<UTooltip text="Delete this view">
-									<UButton
-										@click="openDeleteModal(item)"
-										size="xl"
-										color="gray"
-										variant="link"
-										icon="ic:round-delete"
-										class="rounded-full hover:text-red-600 p-0" />
-								</UTooltip>
-							</li>
-						</template>
-					</ul>
-					<ul v-else-if="loadingState === 'fetching'">
-						<SkeletonTableState />
-						<SkeletonTableState />
-					</ul>
-
-					<div v-else class="py-2 text-center">
-						<p class="text-gray-700">No saved views</p>
-					</div>
-
-					<div class="p-2">
-						<button @click="modalOpenHandler" class="primary-button-sm w-full">
-							<UIcon
-								name="ic:round-plus"
-								class="w-4 h-4 max-md:w-5 max-md:h-5" />
-							Add new
-						</button>
-					</div>
+					<UTooltip text="Remove view">
+						<UButton
+							@click="clearTableState(tableConfig, toggleDropdown)"
+							color="blue"
+							variant="link"
+							icon="ic:round-close"
+							class="p-0" />
+					</UTooltip>
 				</div>
-			</template>
-		</UPopover>
-	</ClientOnly>
+				<ul
+					v-if="tableStateList?.length > 0 && loadingState !== 'fetching'"
+					class="p-2">
+					<template v-for="item in tableStateList" :key="item.id">
+						<li v-if="activeTableState?.id !== item.id" class="flex gap-1">
+							<UButton
+								@click="applyTableState(tableConfig, item, toggleDropdown)"
+								color="secondary"
+								variant="outline"
+								:label="item.name"
+								size="sm" />
+							<UTooltip text="Delete this view">
+								<UButton
+									@click="openDeleteModal(item)"
+									color="error"
+									variant="ghost"
+									size="sm"
+									icon="ic:round-delete"
+									class="rounded-full" />
+							</UTooltip>
+						</li>
+					</template>
+				</ul>
+				<ul v-else-if="loadingState === 'fetching'">
+					<SkeletonTableState />
+					<SkeletonTableState />
+				</ul>
 
+				<div v-else class="py-2 text-center">
+					<p class="text-gray-700">No saved views</p>
+				</div>
+
+				<div class="p-2">
+					<UButton
+						@click="modalOpenHandler"
+						color="primary"
+						variant="solid"
+						label="Add new"
+						icon="ic:round-plus"
+						size="xs"
+						class="w-full justify-center" />
+				</div>
+			</div>
+		</template>
+	</UPopover>
 	<UModal
 		v-model:open="tableStateModal"
 		:ui="{
 			width: 'w-full !max-w-md',
 			overlay: 'bg-black/50',
-		}">
-		<template #content>
-			<div class="p-4">
-				<h3 class="mb-8 text-xl font-medium text-[var(--text-title)]">
-					Save current view
-				</h3>
-				<form
-					@submit.prevent="
-						addTableState(tableConfig, tableStateName, clearTableStateName)
-					"
-					class="flex flex-col gap-8">
-					<div>
-						<label
-							for="tablestate-name"
-							class="block mb-2 text-sm font-medium text-[var(--text-subtitle)]">
-							Template name
-						</label>
-						<input
-							type="text"
-							name="tablestate-name"
-							id="tablestate-name"
-							ref="nameInputRef"
-							v-model="tableStateName"
-							class="input-box"
-							placeholder="Name"
-							required />
-					</div>
+		}"
+		title="Save current view">
+		<template #body>
+			<form
+				@submit.prevent="
+					addTableState(tableConfig, tableStateName, clearTableStateName)
+				"
+				class="flex flex-col gap-8">
+				<div>
+					<label
+						for="tablestate-name"
+						class="block mb-2 text-sm font-medium text-[var(--text-subtitle)]">
+						Template name
+					</label>
+					<input
+						type="text"
+						name="tablestate-name"
+						id="tablestate-name"
+						ref="nameInputRef"
+						v-model="tableStateName"
+						class="input-box"
+						placeholder="Name"
+						required />
+				</div>
 
-					<button
-						type="submit"
-						:class="{
-							'opacity-50 cursor-not-allowed': loadingState === 'adding',
-						}"
-						:disabled="loadingState === 'adding'"
-						class="primary-button w-full">
-						{{ loadingState === "adding" ? "Adding..." : "Save" }}
-					</button>
-				</form>
-			</div>
+				<UButton
+					type="submit"
+					:label="loadingState === 'adding' ? 'Adding...' : 'Save'"
+					:disabled="loadingState === 'adding'" />
+			</form>
 		</template>
 	</UModal>
 </template>
