@@ -10,14 +10,13 @@
 <template>
 	<div>
 		<div class="relative">
-			<button
-				@click="isOpen = true"
-				type="button"
-				class="secondary-button-outline lg:!hidden !absolute top-2 left-2">
-				<UIcon name="ic:round-notes" class="w-5 h-5" />
-			</button>
-
 			<USlideover v-model:open="isOpen" side="left" :ui="slideOverStyle">
+				<UButton
+					color="secondary"
+					variant="outline"
+					icon="ic:round-notes"
+					class="lg:!hidden !absolute top-2 left-2" />
+
 				<template #content>
 					<UiSidebar />
 				</template>

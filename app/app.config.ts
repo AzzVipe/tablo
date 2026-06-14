@@ -2,6 +2,86 @@ export default defineAppConfig({
 	ui: {
 		colors: {
 			primary: "orange",
+			secondary: "stone",
+		},
+
+		button: {
+			defaultVariants: {
+				size: "lg",
+			},
+			compoundVariants: [
+				{
+					color: "primary",
+					variant: "solid",
+					class: {
+						base: "bg-gradient-to-tr from-primary-400 via-primary-500 to-primary-700 text-white border-transparent hover:bg-gradient-to-bl focus:ring-4 focus:ring-primary-200 focus:outline-none",
+					},
+				},
+
+				{
+					color: "secondary",
+					variant: "soft",
+					class: {
+						base: "bg-[var(--btn-secondary-bg)] text-[var(--btn-secondary-text)] hover:bg-[var(--btn-secondary-bg-hover)]",
+					},
+				},
+
+				{
+					color: "secondary",
+					variant: "outline",
+					class: {
+						base: "bg-transparent text-[var(--btn-secondary-text)] ring-[var(--btn-secondary-border)] hover:bg-[var(--btn-secondary-bg)] hover:ring-[var(--btn-secondary-border-hover)]",
+					},
+				},
+
+				{
+					color: "secondary",
+					variant: "ghost",
+					class: {
+						base: "text-[var(--btn-ghost-text)] hover:bg-[var(--btn-secondary-bg-hover)] hover:text-[var(--btn-ghost-text-hover)]",
+					},
+				},
+
+				{
+					color: "secondary",
+					variant: "solid",
+					class: {
+						base: "bg-[var(--page-bg)] text-[var(--btn-secondary-text)] hover:bg-[var(--btn-secondary-bg-hover)]",
+					},
+				},
+
+				{
+					color: "error",
+					variant: "solid",
+					class: {
+						base: "bg-[var(--btn-danger-bg)] text-[var(--btn-danger-text)] ring-[var(--btn-danger-border)] hover:bg-[var(--btn-danger-bg-hover)]",
+					},
+				},
+
+				{
+					color: "error",
+					variant: "outline",
+					class: {
+						base: "bg-transparent text-[var(--btn-danger-text)] ring-[var(--btn-danger-border)] hover:bg-[var(--btn-danger-bg)]",
+					},
+				},
+
+				{
+					color: "warning",
+					variant: "solid",
+					class: {
+						base: "bg-[var(--btn-warning-bg)] text-[var(--btn-warning-text)] ring-[var(--btn-warning-border)] hover:bg-[var(--btn-warning-bg-hover)]",
+					},
+				},
+
+				{
+					color: "success",
+					variant: "solid",
+					class: {
+						base: "bg-[var(--btn-success-bg)] text-[var(--btn-success-text)] ring-[var(--btn-success-border)] hover:bg-[var(--btn-success-bg-hover)]",
+					},
+				},
+			],
 		},
 
 		badge: {
@@ -107,39 +187,6 @@ export default defineAppConfig({
 					variant: "outline",
 					class: {
 						base: "bg-[var(--input-bg)] text-[var(--input-text)] ring-[var(--input-border)] focus:ring-orange-500 placeholder:text-[var(--input-text-placeholder)]",
-					},
-				},
-			],
-		},
-
-		button: {
-			compoundVariants: [
-				{
-					color: "neutral",
-					variant: "ghost",
-					class: {
-						base: "text-[var(--btn-ghost-text)] hover:bg-[var(--btn-secondary-bg)] hover:text-[var(--btn-ghost-text-hover)]",
-					},
-				},
-				{
-					color: "neutral",
-					variant: "outline",
-					class: {
-						base: "text-[var(--text-description)] ring-[var(--input-border)] hover:bg-[var(--btn-secondary-bg)]",
-					},
-				},
-				{
-					color: "neutral",
-					variant: "soft",
-					class: {
-						base: "text-[var(--text-description)] bg-[var(--btn-secondary-bg)] hover:bg-[var(--btn-secondary-bg-hover)]",
-					},
-				},
-				{
-					color: "neutral",
-					variant: "solid",
-					class: {
-						base: "text-[var(--text-description)] bg-[var(--page-bg)] hover:bg-[var(--btn-secondary-bg-hover)]",
 					},
 				},
 			],

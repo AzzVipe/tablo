@@ -195,46 +195,39 @@
 </script>
 
 <template>
-	<div>
-		<UModal
-			:title="modalTitle ? modalTitle : 'New Record'"
-			v-model:open="addModalOpen"
-			:ui="{
-				content: 'w-full !max-w-4xl',
-				overlay: 'bg-black/50',
-			}">
-			<button
-				@click="addModalOpen = true"
-				:class="[
-					btnStyle ? btnStyle : 'secondary-button',
-					addModalOpen ? defaultActStyles : '',
-				]">
-				<UIcon name="ic:round-plus" class="w-5 h-5" />
-				<span class="max-sm:hidden">New</span>
-			</button>
-			<!-- Modal body -->
-			<template #body>
-				<form
-					v-auto-focus
-					autocomplete="off"
-					@keypress.enter.prevent
-					@submit.prevent="addNewRecord()">
-					<div
-						class="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 mb-8">
-						<template v-for="(header, index) in filteredHeaders" :key="index">
-							<FormFields
-								@update="handleAddFields($event)"
-								:header="header"
-								:data="newRecord"
-								:config="{
-									operationType: 'add',
-									chipAutoEdit: false,
-								}" />
-						</template>
-					</div>
-					<button class="primary-button">Add record</button>
-				</form>
-			</template>
-		</UModal>
-	</div>
+	<UModal
+		:title="modalTitle ? modalTitle : 'New Record'"
+		v-model:open="addModalOpen"
+		:ui="{
+			content: 'w-full !max-w-4xl',
+			overlay: 'bg-black/50',
+		}">
+		<UButton
+			label="New"
+			color="secondary"
+			variant="soft"
+			icon="ic:round-plus" />
+		<!-- Modal body -->
+		<template #body>
+			<form
+				v-auto-focus
+				autocomplete="off"
+				@keypress.enter.prevent
+				@submit.prevent="addNewRecord()">
+				<div class="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4 mb-8">
+					<template v-for="(header, index) in filteredHeaders" :key="index">
+						<FormFields
+							@update="handleAddFields($event)"
+							:header="header"
+							:data="newRecord"
+							:config="{
+								operationType: 'add',
+								chipAutoEdit: false,
+							}" />
+					</template>
+				</div>
+				<UButton type="submit" label="Add record" color="primary" />
+			</form>
+		</template>
+	</UModal>
 </template>

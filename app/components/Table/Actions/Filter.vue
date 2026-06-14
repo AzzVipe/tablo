@@ -234,10 +234,11 @@
 		</template>
 
 		<UPopover v-model:open="isPopoverOpen" :ui="{ base: 'overflow-visible' }">
-			<TableActionsButton :popoverOpen="isPopoverOpen" label="filter">
-				<UIcon name="ic:round-tune" class="w-5 h-5" />
-				<span class="max-sm:hidden">Filter</span>
-			</TableActionsButton>
+			<UButton
+				color="secondary"
+				variant="outline"
+				label="Filter"
+				icon="ic:round-tune" />
 
 			<template #content>
 				<div class="p-3">
@@ -322,33 +323,38 @@
 								</template>
 							</li>
 							<li v-if="filters.length > 1">
-								<button
-									type="button"
+								<UButton
 									@click="deleteFilter(index)"
-									class="danger-button-sm !p-1 !rounded-full">
-									<UIcon name="ic:outline-delete-outline" class="w-5 h-5" />
-								</button>
+									icon="ic:outline-delete-outline"
+									color="error"
+									variant="ghost"
+									class="rounded-full"
+									square />
 							</li>
 						</ul>
-						<button
-							type="button"
+						<UButton
 							@click="addEmptyFilter()"
-							class="ghost-button-sm self-center">
-							<UIcon name="ic:round-add-circle" class="w-5 h-5" />
-							Add new
-						</button>
-						<div class="flex gap-2 w-full max-lg:flex-col">
-							<button class="primary-button-sm flex-1">
-								<UIcon name="ic:round-tune" class="w-4 h-4" />
-								Filter
-							</button>
-							<button
-								type="reset"
+							color="secondary"
+							variant="ghost"
+							label="Add new"
+							size="sm"
+							icon="ic:round-add-circle"
+							class="self-center" />
+
+						<div class="flex justify-center gap-2 w-full max-lg:flex-col">
+							<UButton
+								type="submit"
+								label="Filter"
+								size="sm"
+								icon="ic:round-tune" />
+							<UButton
 								@click="resetHandler()"
-								class="secondary-button-sm flex-1">
-								<UIcon name="ic:round-close" class="w-4 h-4" />
-								Reset
-							</button>
+								color="secondary"
+								variant="outline"
+								type="reset"
+								label="Reset"
+								size="sm"
+								icon="ic:round-close" />
 						</div>
 					</form>
 				</div>

@@ -42,42 +42,43 @@
 		class="max-md:mx-auto">
 		<ul class="inline-flex flex-wrap items-center md:gap-4 gap-2 -space-x-px">
 			<li>
-				<button
+				<UButton
 					@click="goToPage(currentPage - 1)"
-					class="ghost-button-sm"
-					:disabled="currentPage === 1">
-					<Icon
-						name="ic:round-chevron-left"
-						class="w-7 h-7 max-xl:w-6 max-xl:h-6" />
-					<span>Prev</span>
-				</button>
+					color="secondary"
+					variant="ghost"
+					label="Prev"
+					icon="ic:round-chevron-left"
+					:disabled="currentPage === 1" />
 			</li>
 
 			<li v-for="(page, index) in pages" :key="index">
-				<button class="leading-tight w-7 h-7" v-if="page === '...'" disabled>
-					...
-				</button>
-				<button
+				<UButton
+					v-if="page === '...'"
+					label="..."
+					color="secondary"
+					variant="outline"
+					disabled />
+
+				<UButton
 					v-else
 					@click="goToPage(page)"
-					class="!rounded-full"
-					:class="[
-						page === currentPage ? 'primary-button-sm' : 'ghost-button-sm',
-					]">
-					{{ page }}
-				</button>
+					:label="page.toString()"
+					color="secondary"
+					variant="outline"
+					active-color="primary"
+					active-variant="solid"
+					class="rounded-full"
+					:active="page === currentPage" />
 			</li>
 
 			<li>
-				<button
+				<UButton
 					@click="goToPage(currentPage + 1)"
-					class="ghost-button-sm"
-					:disabled="currentPage === totalPages">
-					<span>Next</span>
-					<Icon
-						name="ic:round-chevron-right"
-						class="w-7 h-7 max-xl:w-6 max-xl:h-6" />
-				</button>
+					color="secondary"
+					variant="ghost"
+					label="Next"
+					trailing-icon="ic:round-chevron-right"
+					:disabled="currentPage === totalPages" />
 			</li>
 		</ul>
 	</nav>

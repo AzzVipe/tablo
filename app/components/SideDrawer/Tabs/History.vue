@@ -142,7 +142,11 @@
 				name="ic:round-error-outline"
 				class="w-8 h-8 text-[var(--btn-danger-text)]" />
 			<p class="text-sm text-[var(--stone-300)]">{{ error }}</p>
-			<button class="ghost-button-sm" @click="fetchHistory">Try again</button>
+			<UButton
+				@click="fetchHistory"
+				color="secondary"
+				variant="ghost"
+				label="Try again" />
 		</div>
 
 		<!-- Empty -->
@@ -222,7 +226,9 @@
 			</li>
 
 			<!-- Created entry — always at bottom -->
-			<li v-if="createdEntry.createdAt" class="relative flex gap-3 items-center">
+			<li
+				v-if="createdEntry.createdAt"
+				class="relative flex gap-3 items-center">
 				<div class="flex-shrink-0 z-10">
 					<ImageWrapper
 						:src="createdEntry.createdBy?.avatar"

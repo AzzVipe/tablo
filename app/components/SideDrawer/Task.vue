@@ -23,13 +23,15 @@
 						<h1 class="font-medium text-[var(--text-title)]">
 							{{ currRecord?.title }}
 						</h1>
-						<NuxtLink
+						<UButton
 							:to="`/tasks/${currRecord.id}`"
 							target="_blank"
-							class="secondary-button-sm !rounded-full flex items-center gap-1">
-							<UIcon name="ic:outline-open-in-new" class="w-4 h-4" />
-							Open in new tab
-						</NuxtLink>
+							icon="ic:outline-open-in-new"
+							color="secondary"
+							variant="outline"
+							size="sm"
+							label="Open in new tab"
+							class="rounded-full" />
 					</div>
 				</div>
 			</header>

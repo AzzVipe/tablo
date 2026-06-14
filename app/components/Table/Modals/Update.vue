@@ -72,7 +72,7 @@
 							}" />
 					</template>
 				</div>
-				<button class="primary-button">Update record</button>
+				<UButton type="submit" label="Update record" color="primary" />
 			</form>
 		</template>
 	</UModal>

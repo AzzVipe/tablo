@@ -27,9 +27,12 @@
 						class="text-sm text-[var(--stone-300)] hover:text-[var(--text-description)] transition-colors hidden sm:block"
 						>Get started</a
 					>
-					<a href="/tasks" class="primary-button-sm !rounded-full"
-						>Open demo →</a
-					>
+					<UButton
+						to="/tasks"
+						label="Open Demo"
+						color="primary"
+						variant="solid"
+						class="rounded-full" />
 				</div>
 			</div>
 		</nav>
@@ -61,14 +64,18 @@
 					</p>
 
 					<div class="flex flex-wrap gap-3 mb-16">
-						<a href="/tasks" class="primary-button">Open live demo →</a>
-						<a
-							href="https://github.com/AzzVipe/tablo"
+						<UButton
+							to="/tasks"
+							label="Open Demo"
+							color="primary"
+							variant="solid" />
+						<UButton
+							to="https://github.com/AzzVipe/tablo"
 							target="_blank"
-							class="secondary-button flex items-center gap-2">
-							<UIcon name="ic:baseline-code" class="w-4 h-4" />
-							View on GitHub
-						</a>
+							label="View on GitHub"
+							color="secondary"
+							variant="outline"
+							icon="ic:baseline-code" />
 					</div>
 
 					<!-- Before / After -->

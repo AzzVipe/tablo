@@ -468,13 +468,13 @@
 			</div>
 
 			<div class="flex gap-4 items-center">
-				<button
+				<UButton
 					type="submit"
-					class="primary-button w-fit"
-					:class="{ 'opacity-50 cursor-not-allowed': loadingState }"
-					:disabled="loadingState">
-					{{ buttonText }}
-				</button>
+					color="primary"
+					variant="solid"
+					:label="buttonText"
+					:disabled="loadingState === 'initial'"
+					:loading="loadingState === 'initial'" />
 
 				<label
 					v-show="hasAttach"

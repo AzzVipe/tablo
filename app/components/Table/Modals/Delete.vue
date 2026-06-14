@@ -10,11 +10,11 @@
 			<div
 				class="relative p-4 text-center sm:px-4 sm:py-6 text-[var(--text-description)]">
 				<UButton
-					class="absolute top-2.5 right-2.5"
 					@click="deleteModal = false"
+					class="absolute top-2.5 right-2.5"
 					icon="ic:round-close"
 					size="sm"
-					color="gray"
+					color="secondary"
 					variant="ghost" />
 
 				<svg
@@ -34,22 +34,19 @@
 					<span v-else>record</span>
 					?
 				</p>
-				<div class="flex justify-center items-center space-x-4">
-					<button
+				<div class="flex justify-center items-center gap-4">
+					<UButton
 						@click="deleteModal = false"
-						type="button"
-						class="secondary-button">
-						No, cancel
-					</button>
-					<button
+						label="No, cancel"
+						color="secondary"
+						variant="ghost" />
+					<UButton
 						@click="
 							emit('deleteRecord');
 							deleteModal = false;
 						"
-						type="submit"
-						class="danger-button">
-						Yes, I'm sure
-					</button>
+						label="Yes, I'm sure"
+						color="error" />
 				</div>
 			</div>
 		</template>

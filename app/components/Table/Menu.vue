@@ -45,8 +45,8 @@
 		}"
 		:content="{ side: 'left', align: 'start' }">
 		<UButton
-			color="neutral"
-			variant="ghost"
+			color="secondary"
+			variant="outline"
 			size="sm"
 			icon="ic:round-more-horiz"
 			class="rounded-full" />
