@@ -48,7 +48,7 @@ export const findFieldPermissions = (path, tableConfig) => {
  * For each header:
  * - Resolves the user's role from the roles array
  * - Looks up field-level permissions via findFieldPermissions
- * - Sets header.permissions, header.is_visible, header.is_update
+ * - Sets header.permissions, header.visible, header.editable
  * - Sets tableConfig.read / tableConfig.write based on field permissions
  * - Also applies permissions to tab_headers (side drawer tabs)
  *
@@ -74,11 +74,11 @@ export const setTableRules = (tableConfig, roles) => {
 		const perm = findFieldPermissions(getPathFromHeader(header), tableConfig);
 		header.permissions = perm;
 
-		if (header.is_visible === true && perm?.read === false) {
-			header.is_visible = false;
+		if (header.visible === true && perm?.read === false) {
+			header.visible = false;
 		}
-		if (header.is_update === true && perm?.write === false) {
-			header.is_update = false;
+		if (header.editable === true && perm?.write === false) {
+			header.editable = false;
 		}
 
 		// Escalate table-level read/write if any field has access
@@ -102,15 +102,15 @@ export const setTableRules = (tableConfig, roles) => {
 			);
 			singleHeader.permissions = perm;
 
-			if (singleHeader.is_visible === true && perm?.read === false) {
-				singleHeader.is_visible = false;
+			if (singleHeader.visible === true && perm?.read === false) {
+				singleHeader.visible = false;
 			}
-			if (singleHeader.is_update === true && perm?.write === false) {
-				singleHeader.is_update = false;
+			if (singleHeader.editable === true && perm?.write === false) {
+				singleHeader.editable = false;
 			}
-			if (singleHeader.is_visible === true)
+			if (singleHeader.visible === true)
 				tableConfig.tab_headers[key].read = true;
-			if (singleHeader.is_update === true)
+			if (singleHeader.editable === true)
 				tableConfig.tab_headers[key].write = true;
 		}
 
@@ -119,14 +119,14 @@ export const setTableRules = (tableConfig, roles) => {
 			const perm = findFieldPermissions(getPathFromHeader(header), tableConfig);
 			header.permissions = perm;
 
-			if (header.is_visible === true && perm?.read === false) {
-				header.is_visible = false;
+			if (header.visible === true && perm?.read === false) {
+				header.visible = false;
 			}
-			if (header.is_update === true && perm?.write === false) {
-				header.is_update = false;
+			if (header.editable === true && perm?.write === false) {
+				header.editable = false;
 			}
-			if (header.is_visible === true) tableConfig.tab_headers[key].read = true;
-			if (header.is_update === true) tableConfig.tab_headers[key].write = true;
+			if (header.visible === true) tableConfig.tab_headers[key].read = true;
+			if (header.editable === true) tableConfig.tab_headers[key].write = true;
 		});
 	}
 };

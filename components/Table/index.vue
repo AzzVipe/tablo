@@ -260,7 +260,7 @@
 
 					<template #item="{ element: header, index }">
 						<th
-							v-if="header.is_visible && tableTdVisible[header.name]"
+							v-if="header.visible && tableTdVisible[header.name]"
 							:key="index"
 							v-resizable="
 								header.resizable !== false && !header.fixed

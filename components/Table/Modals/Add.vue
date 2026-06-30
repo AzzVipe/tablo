@@ -6,7 +6,7 @@
 	const addModalOpen = ref(false);
 
 	const emit = defineEmits(["addRecord"]);
-	
+
 	const { modalId, headers, useStore, btnStyle, modalTitle } = defineProps([
 		"modalId",
 		"btnStyle",
@@ -81,7 +81,7 @@
 		if (modalId === "AddRecord") store.isAdding = true;
 
 		await headers?.forEach(async (header) => {
-			if (!header.is_add && !header.add_value_same_as) return;
+			if (!header.creatable && !header.add_value_same_as) return;
 
 			const path = header.assign_data_path || getPathFromHeader(header);
 
@@ -93,7 +93,7 @@
 			}
 
 			if (
-				header.is_add &&
+				header.creatable &&
 				isNullOrUndefinedOrEmpty(getValueByPath(newRecord.value, path))
 			) {
 				console.log(path, "EMPTY");
@@ -179,7 +179,7 @@
 
 	const filteredHeaders = computed(() =>
 		headers.filter((h) => {
-			if (!h.is_add) return false;
+			if (!h.creatable) return false;
 
 			if (!h.show_in) return true; // backward compatible
 

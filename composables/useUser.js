@@ -63,7 +63,7 @@ export const useUserHideDropDown = () => {
 		let visibleCount = 0;
 
 		tableHeaders.forEach((item) => {
-			if (!item.is_visible) return;
+			if (!item.visible) return;
 
 			tableTdVisible.value[item.name] = visibleCount < 10;
 			visibleCount++;
@@ -71,7 +71,7 @@ export const useUserHideDropDown = () => {
 
 		for (const tab in tabHeaders) {
 			tabHeaders[tab]?.headers?.forEach((item) => {
-				if (item?.table_view !== false && item.is_visible)
+				if (item?.table_view !== false && item.visible)
 					tableTdVisible.value[item.name] = false;
 			});
 		}

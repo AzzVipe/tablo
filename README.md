@@ -58,8 +58,8 @@ visibility, filters, permissions, and the component that renders each cell.
 Pass your API path - CRUD, pagination, cache, search, and notes are all
 included.
 
-**03 - Add a page.** Pass your store and config to `Table/Wrapper`. The
-toolbar, modals, side drawer, pagination, and bulk actions render automatically.
+**03 - Add a page.** Pass your store and config to `Table/Wrapper`. The toolbar,
+modals, side drawer, pagination, and bulk actions render automatically.
 
 ---
 
@@ -143,13 +143,14 @@ const DEMO_USER = {
 
 Switch to `team` and the Users and Organizations pages disappear from the
 sidebar, write permissions are removed from the table, and the Add button hides
+
 - all driven by the config, no code changes.
 
 | Role       | Read | Create | Edit | Delete | All pages |
 | ---------- | ---- | ------ | ---- | ------ | --------- |
 | superadmin | ✓    | ✓      | ✓    | ✓      | ✓         |
 | admin      | ✓    | ✓      | ✓    | ✓      | ✓         |
-| team       | ✓    | ✕      | ✕    | ✕      | ✕        |
+| team       | ✓    | ✕      | ✕    | ✕      | ✕         |
 
 ---
 
@@ -211,7 +212,7 @@ and registering it in the `SideDrawer/Tabs/index.vue` component.
 ![tablo add modal](public/screenshots/tablo-tasks-add.png)
 
 The Add and Edit modals are generated from the same table config. Fields marked
-`is_add: true` appear in Add; fields marked `is_update: true` appear in Edit.
+`creatable: true` appear in Add; fields marked `editable: true` appear in Edit.
 Field order, input type, required state, and dropdown options all come from the
 config. You never write a form component by hand.
 
@@ -241,9 +242,9 @@ state button shows the view name.
 
 ![tablo overview](public/screenshots/tablo-tasks-overview.png)
 
-Every entity has an `/entity/[id]` route that renders a full detail view - fields
-on the left, drawer tabs on the right. Double-click any field to edit it inline.
-The same table config drives what's shown here.
+Every entity has an `/entity/[id]` route that renders a full detail view -
+fields on the left, drawer tabs on the right. Double-click any field to edit it
+inline. The same table config drives what's shown here.
 
 ---
 
@@ -269,12 +270,12 @@ and the whole thing works against your actual data - no other changes needed.
 Everything is a plugin point. Adding new capabilities never touches the core
 framework - it's always one new file:
 
-| What                | How                                                                                        | File                            |
-| ------------------- | ------------------------------------------------------------------------------------------ | ------------------------------- |
-| New table           | Run the scaffold script - page, store, config, and side drawer component created for you  | `scripts/create-table.js`       |
-| New cell component  | Create a Vue component in `Table/Cells/` and reference it by name in the config           | `Table/Cells/MyCell.vue`        |
-| New form input      | Add a component to `Form/` and add a `v-else-if` in `Form/Fields.vue` for the new type   | `Form/MyInput.vue`              |
-| New drawer tab      | Create a tab component in `SideDrawer/Tabs/` and register it in `tab_headers`             | `SideDrawer/Tabs/MyTab.vue`     |
+| What               | How                                                                                      | File                        |
+| ------------------ | ---------------------------------------------------------------------------------------- | --------------------------- |
+| New table          | Run the scaffold script - page, store, config, and side drawer component created for you | `scripts/create-table.js`   |
+| New cell component | Create a Vue component in `Table/Cells/` and reference it by name in the config          | `Table/Cells/MyCell.vue`    |
+| New form input     | Add a component to `Form/` and add a `v-else-if` in `Form/Fields.vue` for the new type   | `Form/MyInput.vue`          |
+| New drawer tab     | Create a tab component in `SideDrawer/Tabs/` and register it in `tab_headers`            | `SideDrawer/Tabs/MyTab.vue` |
 
 ---
 
@@ -337,47 +338,61 @@ Every entity has a JSON file in `table_configs/` with three sections: `config`
 
 ```json
 {
-  "name": "Priority",
-  "type": "select",
-  "path": "priority",
-  "is_visible": true,
-  "is_add": true,
-  "is_update": true,
-  "sort": false,
-  "filter": true,
-  "update_many": true,
-  "required": false,
-  "component": "TableCellsMultiValue",
-  "display_type": "stage",
-  "options": [
-    { "name": "Low",    "value": "Low",    "class": "bg-green-700 text-green-100",  "icon": "ic:round-arrow-downward" },
-    { "name": "Medium", "value": "Medium", "class": "bg-orange-700 text-orange-100","icon": "ic:round-horizontal-rule" },
-    { "name": "High",   "value": "High",   "class": "bg-red-700 text-red-100",      "icon": "ic:round-priority-high" }
-  ]
+	"name": "Priority",
+	"type": "select",
+	"path": "priority",
+	"visible": true,
+	"creatable": true,
+	"editable": true,
+	"sort": false,
+	"filter": true,
+	"bulk_editable": true,
+	"required": false,
+	"component": "TableCellsMultiValue",
+	"render_as": "stage",
+	"options": [
+		{
+			"name": "Low",
+			"value": "Low",
+			"class": "bg-green-700 text-green-100",
+			"icon": "ic:round-arrow-downward"
+		},
+		{
+			"name": "Medium",
+			"value": "Medium",
+			"class": "bg-orange-700 text-orange-100",
+			"icon": "ic:round-horizontal-rule"
+		},
+		{
+			"name": "High",
+			"value": "High",
+			"class": "bg-red-700 text-red-100",
+			"icon": "ic:round-priority-high"
+		}
+	]
 }
 ```
 
-| Key                  | Type    | Description                                                           |
-| -------------------- | ------- | --------------------------------------------------------------------- |
-| `name`               | string  | Column header label and form field label                              |
-| `type`               | string  | Field type - see type system below                                    |
-| `path`               | string  | Dot-notation path on the record (e.g. `"createdBy.name"`)             |
-| `is_visible`         | boolean | Whether the column appears in the table                               |
-| `is_add`             | boolean | Whether the field appears in the Add modal                            |
-| `is_update`          | boolean | Whether the field appears in the Edit modal                           |
-| `sort`               | boolean | Whether the column header is clickable to sort                        |
-| `filter`             | boolean | Whether the field appears in the Filter dropdown                      |
-| `update_many`        | boolean | Whether the field can be bulk-updated across selected rows            |
-| `required`           | boolean | Marks the field as required in forms                                  |
-| `searchable`         | boolean | Whether this field is included in full-text search                    |
-| `component`          | string  | Vue component name used to render the cell                            |
-| `display_type`       | string  | Display variant for `TableCellsMultiValue`: `stage`, `assign`, `chip` |
-| `options`            | array   | Dropdown options - each has `name`, `value`, `class`, `icon`          |
-| `image_field`        | string  | Path to an avatar/image field shown alongside the value               |
-| `date_format`        | string  | Format string for date display (e.g. `"MMM DD YYYY"`)                 |
-| `highlight_due_date` | boolean | Colors the date red when past due                                     |
-| `default_value`      | string  | Default value for Add modal (e.g. `"now + 7d"` for dates)             |
-| `refresh_on_update`  | boolean | Re-fetches the record from API after updating this field              |
+| Key             | Type    | Description                                                           |
+| --------------- | ------- | --------------------------------------------------------------------- |
+| `name`          | string  | Column header label and form field label                              |
+| `type`          | string  | Field type - see type system below                                    |
+| `path`          | string  | Dot-notation path on the record (e.g. `"createdBy.name"`)             |
+| `visible`       | boolean | Whether the column appears in the table                               |
+| `creatable`     | boolean | Whether the field appears in the Add modal                            |
+| `editable`      | boolean | Whether the field appears in the Edit modal                           |
+| `sort`          | boolean | Whether the column header is clickable to sort                        |
+| `filter`        | boolean | Whether the field appears in the Filter dropdown                      |
+| `bulk_editable` | boolean | Whether the field can be bulk-updated across selected rows            |
+| `required`      | boolean | Marks the field as required in forms                                  |
+| `searchable`    | boolean | Whether this field is included in full-text search                    |
+| `component`     | string  | Vue component name used to render the cell                            |
+| `render_as`     | string  | Display variant for `TableCellsMultiValue`: `stage`, `assign`, `chip` |
+| `options`       | array   | Dropdown options - each has `name`, `value`, `class`, `icon`          |
+| `image_path`    | string  | Path to an avatar/image field shown alongside the value               |
+| `date_format`   | string  | Format string for date display (e.g. `"MMM DD YYYY"`)                 |
+| `flag_overdue`  | boolean | Colors the date red when past due                                     |
+| `default_value` | string  | Default value for Add modal (e.g. `"now + 7d"` for dates)             |
 
 ### Field types
 
@@ -398,41 +413,57 @@ When `type` is `relation` or `multi-relation`, add these keys:
 
 ```json
 {
-  "type": "multi-relation",
-  "path": "assignedTo",
-  "get_from": "userStore",
-  "get_from_value": "id",
-  "get_from_field": "name",
-  "get_from_image": "avatar"
+	"type": "multi-relation",
+	"path": "assignedTo",
+	"source": "userStore",
+	"source_value": "id",
+	"source_field": "name",
+	"source_image": "avatar"
 }
 ```
 
-| Key              | Description                                                             |
-| ---------------- | ----------------------------------------------------------------------- |
-| `get_from`       | Pinia store name to pull options from                                   |
-| `get_from_value` | Field on the related record to use as the stored value (usually `"id"`) |
-| `get_from_field` | Field on the related record to display as the label (e.g. `"name"`)     |
-| `get_from_image` | Field on the related record to use as an avatar image                   |
-| `unique_values`  | API field name used to fetch unique filter values from the server       |
+| Key            | Description                                                             |
+| -------------- | ----------------------------------------------------------------------- |
+| `source`       | Pinia store name to pull options from                                   |
+| `source_value` | Field on the related record to use as the stored value (usually `"id"`) |
+| `source_field` | Field on the related record to display as the label (e.g. `"name"`)     |
+| `source_image` | Field on the related record to use as an avatar image                   |
+| `filter_field` | API field name used to fetch unique filter values from the server       |
 
 ### Side drawer tabs (`tab_headers`)
 
 ```json
 {
-  "tab_headers": {
-    "notes": {
-      "type": "notes",
-      "header": { "name": "Notes", "path": "notes", "is_visible": true, "is_update": true, "attachment": true }
-    },
-    "chips": {
-      "type": "chips",
-      "header": { "name": "Tags", "path": "chips", "is_visible": true, "is_update": true }
-    },
-    "history": {
-      "type": "history",
-      "header": { "name": "History", "path": "history", "is_visible": true, "is_update": false }
-    }
-  }
+	"tab_headers": {
+		"notes": {
+			"type": "notes",
+			"header": {
+				"name": "Notes",
+				"path": "notes",
+				"visible": true,
+				"editable": true,
+				"attachment": true
+			}
+		},
+		"chips": {
+			"type": "chips",
+			"header": {
+				"name": "Tags",
+				"path": "chips",
+				"visible": true,
+				"editable": true
+			}
+		},
+		"history": {
+			"type": "history",
+			"header": {
+				"name": "History",
+				"path": "history",
+				"visible": true,
+				"editable": false
+			}
+		}
+	}
 }
 ```
 
@@ -440,18 +471,39 @@ Available tab types: `notes`, `chips`, `history`, `details`. Adding a new tab
 type means creating a `SideDrawer/Tabs/YourTab.vue` component and adding a
 `v-else-if` case in `SideDrawer/Tabs/index.vue`.
 
-`is_visible` and `is_update` on the tab header are used by the permission system
-to show/hide the tab per role.
+`visible` and `editable` on the tab header are used by the permission system to
+show/hide the tab per role.
 
 ### Roles (`roles`)
 
 ```json
 {
-  "roles": [
-    { "name": "superadmin", "read": true,  "write": true,  "insert": true,  "delete": true,  "search": true },
-    { "name": "admin",      "read": true,  "write": true,  "insert": true,  "delete": true,  "search": true },
-    { "name": "team",       "read": true,  "write": false, "insert": false, "delete": false, "search": true }
-  ]
+	"roles": [
+		{
+			"name": "superadmin",
+			"read": true,
+			"write": true,
+			"insert": true,
+			"delete": true,
+			"search": true
+		},
+		{
+			"name": "admin",
+			"read": true,
+			"write": true,
+			"insert": true,
+			"delete": true,
+			"search": true
+		},
+		{
+			"name": "team",
+			"read": true,
+			"write": false,
+			"insert": false,
+			"delete": false,
+			"search": true
+		}
+	]
 }
 ```
 
@@ -468,17 +520,41 @@ Controls which pages appear in the sidebar and which roles can see them.
 
 ```json
 {
-  "config": [
-    { "name": "Tasks",         "to": "/tasks",         "value": "tasks",         "icon": "ic:round-task" },
-    { "name": "Projects",      "to": "/projects",      "value": "projects",      "icon": "ic:round-folder-open" },
-    { "name": "Organizations", "to": "/organizations", "value": "organizations", "icon": "ic:round-home-work" },
-    { "name": "Users",         "to": "/users",         "value": "users",         "icon": "ic:round-person" }
-  ],
-  "roles": [
-    { "name": "superadmin", "visible": true },
-    { "name": "admin",      "visible": true },
-    { "name": "team",       "visible": true, "pages": { "organizations": false, "users": false } }
-  ]
+	"config": [
+		{
+			"name": "Tasks",
+			"to": "/tasks",
+			"value": "tasks",
+			"icon": "ic:round-task"
+		},
+		{
+			"name": "Projects",
+			"to": "/projects",
+			"value": "projects",
+			"icon": "ic:round-folder-open"
+		},
+		{
+			"name": "Organizations",
+			"to": "/organizations",
+			"value": "organizations",
+			"icon": "ic:round-home-work"
+		},
+		{
+			"name": "Users",
+			"to": "/users",
+			"value": "users",
+			"icon": "ic:round-person"
+		}
+	],
+	"roles": [
+		{ "name": "superadmin", "visible": true },
+		{ "name": "admin", "visible": true },
+		{
+			"name": "team",
+			"visible": true,
+			"pages": { "organizations": false, "users": false }
+		}
+	]
 }
 ```
 
@@ -512,16 +588,16 @@ responses from overwriting fresh data using a `Symbol`-based request ID.
 
 ## Theming
 
-All colors are CSS custom properties in `assets/css/main.css`, structured in
-two layers:
+All colors are CSS custom properties in `assets/css/main.css`, structured in two
+layers:
 
 **Primitive tokens** - the actual color values:
 
 ```css
 :root {
-  --stone-950: #0c0a09;
-  --stone-900: #1c1917;
-  --orange-focus: #ea580c;
+	--stone-950: #0c0a09;
+	--stone-900: #1c1917;
+	--orange-focus: #ea580c;
 }
 ```
 
@@ -529,10 +605,10 @@ two layers:
 
 ```css
 :root {
-  --page-bg: var(--stone-900);
-  --card-bg: var(--stone-750);
-  --text-title: var(--orange-focus);
-  --input-bg: var(--stone-750);
+	--page-bg: var(--stone-900);
+	--card-bg: var(--stone-750);
+	--text-title: var(--orange-focus);
+	--input-bg: var(--stone-750);
 }
 ```
 

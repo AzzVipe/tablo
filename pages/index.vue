@@ -101,11 +101,11 @@
 							<pre
 								class="text-xs text-[var(--text-description)] leading-relaxed overflow-hidden">
 								<code>
-									<span class="text-[var(--stone-300)]">{</span>
+								<span class="text-[var(--stone-300)]">{</span>
 									<span class="text-[var(--text-subtitle)]">"name"</span><span class="text-[var(--stone-300)]">:</span> <span class="text-green-400">"Priority"</span><span class="text-[var(--stone-300)]">,</span>
 									<span class="text-[var(--text-subtitle)]">"type"</span><span class="text-[var(--stone-300)]">:</span> <span class="text-green-400">"select"</span><span class="text-[var(--stone-300)]">,</span>
 									<span class="text-[var(--text-subtitle)]">"path"</span><span class="text-[var(--stone-300)]">:</span> <span class="text-green-400">"priority"</span><span class="text-[var(--stone-300)]">,</span>
-									<span class="text-[var(--text-subtitle)]">"is_add"</span><span class="text-[var(--stone-300)]">:</span> <span class="text-orange-400">true</span><span class="text-[var(--stone-300)]">,</span>
+									<span class="text-[var(--text-subtitle)]">"creatable"</span><span class="text-[var(--stone-300)]">:</span> <span class="text-orange-400">true</span><span class="text-[var(--stone-300)]">,</span>
 									<span class="text-[var(--text-subtitle)]">"filter"</span><span class="text-[var(--stone-300)]">:</span> <span class="text-orange-400">true</span>
 								<span class="text-[var(--stone-300)]">}</span>
 								</code>
@@ -329,12 +329,12 @@
 					Fields marked
 					<span
 						class="font-mono text-[var(--text-description)] bg-[var(--stone-750)] px-1.5 py-0.5 rounded text-xs"
-						>is_add: true</span
+						>creatable: true</span
 					>
 					appear in Add, fields marked
 					<span
 						class="font-mono text-[var(--text-description)] bg-[var(--stone-750)] px-1.5 py-0.5 rounded text-xs"
-						>is_update: true</span
+						>editable: true</span
 					>
 					appear in Edit. Field order, input type, required state, and dropdown
 					options all come from the config. You never write a form component by

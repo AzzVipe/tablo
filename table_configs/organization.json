@@ -1,24 +1,24 @@
 {
-  "config": [
+  "headers": [
     {
       "name": "Name",
       "type": "text",
       "path": "name",
-      "is_add": true,
-      "is_update": true,
-      "is_visible": true,
-      "is_primary": true,
-      "image_field": "avatar",
+      "creatable": true,
+      "editable": true,
+      "visible": true,
+      "primary": true,
+      "image_path": "avatar",
       "component": "TableCellsPeople"
     },
     {
       "name": "Created by",
       "type": "text",
       "path": "createdBy.name",
-      "is_add": false,
-      "is_update": false,
-      "is_visible": true,
-      "image_field": "createdBy.avatar",
+      "creatable": false,
+      "editable": false,
+      "visible": true,
+      "image_path": "createdBy.avatar",
       "component": "TableCellsPeople"
     },
     {
@@ -26,9 +26,9 @@
       "type": "date",
       "path": "createdAt",
       "sort": true,
-      "is_add": false,
-      "is_update": false,
-      "is_visible": true,
+      "creatable": false,
+      "editable": false,
+      "visible": true,
       "date_format": "MMM DD YYYY",
       "component": "TableCellsDate"
     }
@@ -41,8 +41,8 @@
           "name": "Tagline",
           "type": "text",
           "path": "about.tagline",
-          "is_visible": true,
-          "is_update": true,
+          "visible": true,
+          "editable": true,
           "table_view": true,
           "component": "TableCellsDefault"
         },
@@ -50,8 +50,8 @@
           "name": "Webiste",
           "type": "text",
           "path": "about.website_url",
-          "is_visible": true,
-          "is_update": true,
+          "visible": true,
+          "editable": true,
           "table_view": true,
           "component": "TableCellsDefault"
         },
@@ -59,8 +59,8 @@
           "name": "LinkedIn url",
           "type": "text",
           "path": "about.url",
-          "is_visible": true,
-          "is_update": true,
+          "visible": true,
+          "editable": true,
           "table_view": true,
           "component": "TableCellsDefault"
         },
@@ -68,8 +68,8 @@
           "name": "Year founded",
           "type": "date",
           "path": "about.founded_on_year",
-          "is_visible": true,
-          "is_update": true,
+          "visible": true,
+          "editable": true,
           "table_view": true,
           "component": "TableCellsDefault"
         },
@@ -77,8 +77,8 @@
           "name": "Employee count",
           "type": "number",
           "path": "about.employee_count",
-          "is_visible": true,
-          "is_update": true,
+          "visible": true,
+          "editable": true,
           "table_view": true,
           "component": "TableCellsDefault"
         },
@@ -86,8 +86,8 @@
           "name": "Follower count",
           "type": "number",
           "path": "about.follower_count",
-          "is_visible": true,
-          "is_update": true,
+          "visible": true,
+          "editable": true,
           "table_view": true,
           "component": "TableCellsDefault"
         }
@@ -100,8 +100,8 @@
         "type": "text",
         "path": "notes",
         "table_view": false,
-        "is_update": true,
-        "is_visible": true,
+        "editable": true,
+        "visible": true,
         "component": "TableCellsDefault"
       }
     },
@@ -112,8 +112,8 @@
         "type": "text",
         "path": "history",
         "table_view": false,
-        "is_update": false,
-        "is_visible": true,
+        "editable": false,
+        "visible": true,
         "component": "TableCellsDefault"
       }
     }

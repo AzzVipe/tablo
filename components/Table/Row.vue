@@ -50,7 +50,7 @@
 	};
 
 	const hasUpdate = computed(() => {
-		return tableConfig.headers.some((field) => field.is_update);
+		return tableConfig.headers.some((field) => field.editable);
 	});
 
 	const handleRowColumnClick = (index, header) => {
@@ -195,7 +195,7 @@
 
 	<template v-for="(header, index) in tableConfig.headers" :key="index">
 		<td
-			v-if="rowColumnIndex === `${rowData.id}-${index}` && header.is_update"
+			v-if="rowColumnIndex === `${rowData.id}-${index}` && header.editable"
 			v-click-outside="handleColumnEscape"
 			class="px-1 py-1.5">
 			<form @submit.prevent autocomplete="off">
@@ -214,7 +214,7 @@
 
 		<template v-else>
 			<td
-				v-if="header.is_visible && tableTdVisible?.[header.name]"
+				v-if="header.visible && tableTdVisible?.[header.name]"
 				@dblclick="handleRowColumnClick(`${rowData.id}-${index}`, header)"
 				class="button-open whitespace-nowrap px-3 py-1.5 transition-all bg-clip-padding">
 				<template v-if="header.component">
@@ -225,7 +225,7 @@
 						:is="header?.component"
 						:tableName="tableName"
 						:recordId="rowData.id"
-						:image="getValueByPath(rowData, header.image_field)"
+						:image="getValueByPath(rowData, header.image_path)"
 						:content="
 							header?.use_row_data
 								? rowData
@@ -247,7 +247,7 @@
 	<template v-for="(tab, index) in tableConfig.tab_headers" :key="index">
 		<template v-for="(header, index) in tab?.headers" :key="index">
 			<td
-				v-if="header.is_visible && tableTdVisible?.[header.name]"
+				v-if="header.visible && tableTdVisible?.[header.name]"
 				class="button-open whitespace-nowrap"
 				@click="detailsHandler(rowData)">
 				<TableCellsDefault
@@ -259,7 +259,7 @@
 		</template>
 		<td
 			v-if="
-				tab.header?.is_visible === true &&
+				tab.header?.visible === true &&
 				tab.header?.table_view === true &&
 				tableTdVisible?.[tab.header.name]
 			"

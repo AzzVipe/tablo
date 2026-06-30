@@ -1,21 +1,21 @@
 {
-	"config": [
+	"headers": [
 		{
 			"name": "Name",
 			"path": "name",
 			"type": "text",
-			"is_primary": true,
-			"is_visible": true,
-			"image_field": "avatar",
+			"primary": true,
+			"visible": true,
+			"image_path": "avatar",
 			"component": "TableCellsPeople"
 		},
 		{
 			"name": "Email",
 			"path": "email",
 			"type": "text",
-			"is_add": true,
-			"is_update": true,
-			"is_visible": true,
+			"creatable": true,
+			"editable": true,
+			"visible": true,
 			"component": "TableCellsDefault"
 		},
 		{
@@ -24,29 +24,28 @@
 			"path": "organization",
 			"sort": false,
 			"filter": true,
-			"is_add": true,
-			"is_update": true,
-			"is_visible": true,
-			"update_many": true,
+			"creatable": true,
+			"editable": true,
+			"visible": true,
+			"bulk_editable": true,
 			"required": false,
-			"image_field": "avatar",
-			"refresh_on_update": true,
-			"get_from": "organizationStore",
-			"get_from_value": "id",
-			"get_from_field": "name",
-			"unique_values": "organization",
+			"image_path": "avatar",
+			"source": "organizationStore",
+			"source_value": "id",
+			"source_field": "name",
+			"filter_field": "organization",
 			"component": "TableCellsMultiValue",
-			"display_type": "assign"
+			"render_as": "assign"
 		},
 		{
 			"name": "Department",
 			"path": "department",
 			"type": "select",
 			"filter": true,
-			"is_add": true,
-			"is_update": true,
-			"is_visible": true,
-			"update_many": true,
+			"creatable": true,
+			"editable": true,
+			"visible": true,
+			"bulk_editable": true,
 			"options": [
 				{
 					"name": "Engineering",
@@ -74,16 +73,16 @@
 				}
 			],
 			"component": "TableCellsMultiValue",
-			"display_type": "stage"
+			"render_as": "stage"
 		},
 		{
 			"name": "Role",
 			"path": "role",
 			"type": "select",
 			"filter": true,
-			"is_add": true,
-			"is_update": true,
-			"is_visible": true,
+			"creatable": true,
+			"editable": true,
+			"visible": true,
 			"options": [
 				{
 					"name": "Super Admin",
@@ -111,16 +110,16 @@
 				}
 			],
 			"component": "TableCellsMultiValue",
-			"display_type": "stage"
+			"render_as": "stage"
 		},
 		{
 			"name": "Created at",
 			"type": "date",
 			"path": "createdAt",
 			"filter": false,
-			"is_add": false,
-			"is_update": false,
-			"is_visible": true,
+			"creatable": false,
+			"editable": false,
+			"visible": true,
 			"date_format": "MMM DD YYYY",
 			"component": "TableCellsDate"
 		}
@@ -133,8 +132,8 @@
 				"type": "text",
 				"path": "history",
 				"table_view": false,
-				"is_update": false,
-				"is_visible": true,
+				"editable": false,
+				"visible": true,
 				"component": "TableCellsDefault"
 			}
 		}

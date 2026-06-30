@@ -2,7 +2,7 @@
 	import {
 		roles,
 		tab_headers,
-		config as headers,
+		headers,
 	} from "@/table_configs/organization.json";
 
 	definePageMeta({

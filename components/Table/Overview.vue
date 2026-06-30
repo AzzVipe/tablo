@@ -87,7 +87,7 @@
 				<template v-for="(header, hi) in headers" :key="hi">
 					<!-- Edit mode -->
 					<form
-						v-if="editingIndex === `${currRecord.id}-${hi}` && header.is_update"
+						v-if="editingIndex === `${currRecord.id}-${hi}` && header.editable"
 						v-click-outside="handleColumnEscape"
 						class="col-span-1"
 						@submit.prevent
@@ -113,14 +113,14 @@
 
 					<!-- Read mode -->
 					<div
-						v-else-if="header.is_visible"
+						v-else-if="header.visible"
 						class="flex flex-col gap-1 group cursor-pointer"
 						@dblclick="handleRowColumnClick(`${currRecord.id}-${hi}`, header)">
 						<span
 							class="tracking-wide font-medium text-[var(--text-subtitle)] flex items-center gap-1.5">
 							{{ header.name }}
 							<UIcon
-								v-if="header.is_update"
+								v-if="header.editable"
 								name="ic:round-mode-edit"
 								class="w-3 h-3 opacity-0 group-hover:opacity-50 transition-opacity" />
 						</span>
@@ -141,7 +141,7 @@
 								:index="hi"
 								:header="{ ...header, tooltip: false }"
 								:recordId="currRecord.id"
-								:image="getValueByPath(currRecord, header.image_field)"
+								:image="getValueByPath(currRecord, header.image_path)"
 								:content="
 									header.use_row_data
 										? currRecord

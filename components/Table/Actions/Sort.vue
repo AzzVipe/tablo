@@ -44,7 +44,7 @@
 					<ul class="px-3 py-2 text-sm flex flex-col gap-1">
 						<template v-for="(header, i) in tableConfig.headers" :key="i">
 							<li
-								v-if="header.is_visible && header.sort"
+								v-if="header.visible && header.sort"
 								class="flex items-center gap-2">
 								<span
 									class="w-full py-2 text-start text-nowrap text-[var(--text-subtitle)]"

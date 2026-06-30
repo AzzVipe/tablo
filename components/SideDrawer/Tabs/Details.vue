@@ -50,12 +50,10 @@
 		return val;
 	};
 
-	const visibleHeaders = computed(() =>
-		props.headers.filter((h) => h.is_visible)
-	);
+	const visibleHeaders = computed(() => props.headers.filter((h) => h.visible));
 
 	const editableHeaders = computed(() =>
-		props.headers.filter((h) => h.is_update)
+		props.headers.filter((h) => h.editable)
 	);
 </script>
 

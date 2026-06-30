@@ -1,13 +1,14 @@
 {
-	"config": [
+	"headers": [
 		{
 			"name": "Title",
 			"type": "text",
 			"path": "title",
-			"is_visible": true,
+			"visible": true,
 			"searchable": true,
-			"is_add": true,
-			"is_update": true,
+			"creatable": true,
+			"editable": true,
+			"primary": true,
 			"component": "TableCellsDefault"
 		},
 		{
@@ -15,11 +16,11 @@
 			"type": "date",
 			"path": "dueDate",
 			"sort": true,
-			"is_add": true,
-			"is_update": true,
-			"is_visible": true,
-			"update_many": true,
-			"highlight_due_date": true,
+			"creatable": true,
+			"editable": true,
+			"visible": true,
+			"bulk_editable": true,
+			"flag_overdue": true,
 			"default_value": "now + 7d",
 			"component": "TableCellsDate"
 		},
@@ -28,30 +29,29 @@
 			"type": "relation",
 			"path": "project",
 			"filter": true,
-			"is_add": true,
-			"is_update": true,
-			"is_visible": true,
-			"update_many": true,
+			"creatable": true,
+			"editable": true,
+			"visible": true,
+			"bulk_editable": true,
 			"required": false,
-			"image_field": "avatar",
-			"refresh_on_update": true,
-			"get_from": "projectStore",
-			"get_from_value": "id",
-			"get_from_field": "title",
-			"unique_values": "project",
+			"image_path": "avatar",
+			"source": "projectStore",
+			"source_value": "id",
+			"source_field": "title",
+			"filter_field": "project",
 			"component": "TableCellsMultiValue",
-			"display_type": "assign"
+			"render_as": "assign"
 		},
 		{
 			"name": "Stage",
 			"path": "stage",
 			"type": "select",
 			"filter": true,
-			"is_add": true,
-			"is_update": true,
-			"is_visible": true,
-			"update_many": true,
-			"optionsParentClass": "flex flex-row-reverse justify-end gap-1",
+			"creatable": true,
+			"editable": true,
+			"visible": true,
+			"bulk_editable": true,
+			"options_wrapper_class": "flex flex-row-reverse justify-end gap-1",
 			"options": [
 				{
 					"name": "To Do",
@@ -97,37 +97,36 @@
 				}
 			],
 			"component": "TableCellsMultiValue",
-			"display_type": "stage"
+			"render_as": "stage"
 		},
 		{
 			"name": "Assigned to",
 			"type": "multi-relation",
 			"path": "assignedTo",
 			"filter": true,
-			"is_add": true,
-			"is_update": true,
-			"is_visible": true,
-			"update_many": true,
+			"creatable": true,
+			"editable": true,
+			"visible": true,
+			"bulk_editable": true,
 			"required": false,
-			"image_field": "avatar",
-			"refresh_on_update": true,
-			"get_from": "userStore",
-			"get_from_value": "id",
-			"get_from_field": "name",
-			"unique_values": "assignedTo",
+			"image_path": "avatar",
+			"source": "userStore",
+			"source_value": "id",
+			"source_field": "name",
+			"filter_field": "assignedTo",
 			"component": "TableCellsMultiValue",
-			"display_type": "assign"
+			"render_as": "assign"
 		},
 		{
 			"name": "Priority",
 			"path": "priority",
 			"type": "select",
 			"filter": true,
-			"is_add": true,
-			"is_update": true,
-			"is_visible": true,
-			"update_many": true,
-			"optionsParentClass": "justify-between",
+			"creatable": true,
+			"editable": true,
+			"visible": true,
+			"bulk_editable": true,
+			"options_wrapper_class": "justify-between",
 			"options": [
 				{
 					"name": "Low",
@@ -149,18 +148,18 @@
 				}
 			],
 			"component": "TableCellsMultiValue",
-			"display_type": "stage"
+			"render_as": "stage"
 		},
 		{
 			"name": "Labels",
 			"path": "labels",
 			"type": "multi-select",
 			"filter": true,
-			"is_add": false,
-			"is_update": true,
-			"is_visible": true,
-			"update_many": true,
-			"optionsParentClass": "flex flex-row-reverse justify-end gap-1",
+			"creatable": false,
+			"editable": true,
+			"visible": true,
+			"bulk_editable": true,
+			"options_wrapper_class": "flex flex-row-reverse justify-end gap-1",
 			"options": [
 				{
 					"name": "Payments",
@@ -188,16 +187,16 @@
 				}
 			],
 			"component": "TableCellsMultiValue",
-			"display_type": "stage"
+			"render_as": "stage"
 		},
 		{
 			"name": "Created by",
 			"type": "text",
 			"path": "createdBy.name",
-			"is_add": false,
-			"is_update": false,
-			"is_visible": true,
-			"image_field": "createdBy.avatar",
+			"creatable": false,
+			"editable": false,
+			"visible": true,
+			"image_path": "createdBy.avatar",
 			"component": "TableCellsPeople"
 		},
 		{
@@ -205,9 +204,9 @@
 			"type": "date",
 			"path": "createdAt",
 			"sort": true,
-			"is_add": false,
-			"is_update": false,
-			"is_visible": true,
+			"creatable": false,
+			"editable": false,
+			"visible": true,
 			"date_format": "MMM DD YYYY",
 			"component": "TableCellsDate"
 		}
@@ -221,8 +220,8 @@
 				"path": "notes",
 				"attachment": true,
 				"table_view": true,
-				"is_update": true,
-				"is_visible": true,
+				"editable": true,
+				"visible": true,
 				"component": "TableCellsDefault"
 			}
 		},
@@ -234,8 +233,8 @@
 				"path": "chips",
 				"attachment": true,
 				"table_view": true,
-				"is_update": true,
-				"is_visible": true,
+				"editable": true,
+				"visible": true,
 				"component": "TableCellsDefault"
 			}
 		},
@@ -246,8 +245,8 @@
 				"type": "text",
 				"path": "history",
 				"table_view": false,
-				"is_update": false,
-				"is_visible": true,
+				"editable": false,
+				"visible": true,
 				"component": "TableCellsDefault"
 			}
 		}

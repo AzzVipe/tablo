@@ -23,11 +23,11 @@
 	const emit = defineEmits(["update:modelValue"]);
 
 	// ---- Store guard ----
-	const store = globalStore[props.header.get_from]?.useStore();
+	const store = globalStore[props.header.source]?.useStore();
 
 	if (!store) {
 		console.warn(
-			`[AssignDropdown] Store "${props.header.get_from}" not found in globalStore`
+			`[AssignDropdown] Store "${props.header.source}" not found in globalStore`
 		);
 	}
 
@@ -64,18 +64,18 @@
 		}
 
 		const temp = dropdownCache.value.options.find(
-			(opt) => getValueByPath(opt, props.header.get_from_value) === val
+			(opt) => getValueByPath(opt, props.header.source_value) === val
 		);
 
 		return {
-			[props.header.get_from_value]: val,
-			[props.header.get_from_field]: getValueByPath(
+			[props.header.source_value]: val,
+			[props.header.source_field]: getValueByPath(
 				temp,
-				props.header.get_from_field
+				props.header.source_field
 			),
-			[props.header.get_from_image]: getValueByPath(
+			[props.header.source_image]: getValueByPath(
 				temp,
-				props.header.get_from_image
+				props.header.source_image
 			),
 		};
 	};
@@ -87,8 +87,8 @@
 
 			try {
 				const res = await store.findRecords(
-					props.header.get_from_match || null,
-					props.header.get_from_sort || null,
+					props.header.source_match || null,
+					props.header.source_sort || null,
 					{ metadata: true }
 				);
 
@@ -116,13 +116,13 @@
 	);
 
 	watch(
-		() => getValueByPath(selected.value, props.header.get_from_value),
+		() => getValueByPath(selected.value, props.header.source_value),
 		(newId) => {
 			if (!isMounted.value) return;
 
 			const currentId =
 				typeof props.modelValue === "object"
-					? getValueByPath(props.modelValue, props.header.get_from_value)
+					? getValueByPath(props.modelValue, props.header.source_value)
 					: props.modelValue;
 
 			if (newId === currentId) {
@@ -138,17 +138,17 @@
 			const value = props.header?.assign_data_using_object
 				? {
 						id: selected.value.id,
-						[props.header.get_from_value]: getValueByPath(
+						[props.header.source_value]: getValueByPath(
 							newVal,
-							props.header.get_from_value
+							props.header.source_value
 						),
-						[props.header.get_from_field]: getValueByPath(
+						[props.header.source_field]: getValueByPath(
 							newVal,
-							props.header.get_from_field
+							props.header.source_field
 						),
-						[props.header.get_from_image]: getValueByPath(
+						[props.header.source_image]: getValueByPath(
 							newVal,
-							props.header.get_from_image
+							props.header.source_image
 						),
 				  }
 				: newId;
@@ -190,11 +190,11 @@
 		:selectClass="selectClass"
 		:uiMenu="uiMenuValue"
 		:placeholder="`Search for ${header.name}`"
-		:option-attribute="header.get_from_field">
+		:option-attribute="header.source_field">
 		<template #label>
 			<div :class="variantStyles.labelClass">
 				<span v-if="selected" class="truncate">
-					{{ getValueByPath(selected, header.get_from_field) }}
+					{{ getValueByPath(selected, header.source_field) }}
 				</span>
 				<span v-else class="text-[var(--input-text-placeholder)]">
 					Search for {{ header.name }}
@@ -208,11 +208,11 @@
 				:class="opt.class">
 				<div class="flex gap-2 items-center">
 					<ImageWrapper
-						:src="getValueByPath(opt, header.get_from_image)"
-						:name="getValueByPath(opt, header.get_from_field)"
+						:src="getValueByPath(opt, header.source_image)"
+						:name="getValueByPath(opt, header.source_field)"
 						styles="w-7 h-7 rounded-full object-cover text-white text-sm font-medium flex-shrink-0" />
 					<span :class="variantStyles.optionClass" class="truncate">
-						{{ getValueByPath(opt, header.get_from_field) }}
+						{{ getValueByPath(opt, header.source_field) }}
 					</span>
 				</div>
 			</div>

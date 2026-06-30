@@ -54,13 +54,13 @@ const buildAllHeaders = (headers, tabHeaders) => {
 		const tabData = tabHeaders[tab];
 
 		tabData?.headers?.forEach((item) => {
-			if (item.is_visible === true && item.table_view === true) {
+			if (item.visible === true && item.table_view === true) {
 				headers.push(item);
 			}
 		});
 
 		if (
-			tabData?.header?.is_visible === true &&
+			tabData?.header?.visible === true &&
 			tabData?.header?.table_view === true
 		) {
 			headers.push(tabData.header);

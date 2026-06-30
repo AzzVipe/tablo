@@ -1,7 +1,7 @@
 <template>
 	<div
 		class="flex items-center gap-2 relative panel-container"
-		:class="!Array.isArray(content) && header?.optionsParentClass">
+		:class="!Array.isArray(content) && header?.options_wrapper_class">
 		<!-- Not set -->
 		<p
 			v-if="isNullOrUndefinedOrEmpty(content)"
@@ -101,9 +101,9 @@
 <script setup>
 	const { content, header } = defineProps(["content", "header"]);
 
-	const isAssign = computed(() => header?.display_type === "assign");
-	const isStage = computed(() => header?.display_type === "stage");
-	const isChip = computed(() => header?.display_type === "chip");
+	const isAssign = computed(() => header?.render_as === "assign");
+	const isStage = computed(() => header?.render_as === "stage");
+	const isChip = computed(() => header?.render_as === "chip");
 
 	const containerRef = ref(null);
 	const panelRef = ref(null);
@@ -121,7 +121,7 @@
 	);
 
 	const valueOf = (item) =>
-		isAssign.value && item ? item[header.get_from_field || "name"] : item;
+		isAssign.value && item ? item[header.source_field || "name"] : item;
 
 	const displayValue = (item, abbreviate = false) => {
 		const val = valueOf(item);

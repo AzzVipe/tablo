@@ -1,5 +1,5 @@
 export function updateFilterOptions(header, fullObject) {
-	if (!header || !header.unique_values) return;
+	if (!header || !header.filter_field) return;
 	if (!Array.isArray(fullObject)) return;
 
 	// Ensure array exists

@@ -1,9 +1,5 @@
 <script setup>
-	import {
-		roles,
-		tab_headers,
-		config as headers,
-	} from "@/table_configs/user.json";
+	import { roles, tab_headers, headers } from "@/table_configs/user.json";
 
 	import * as composable from "~/composables/useUser";
 

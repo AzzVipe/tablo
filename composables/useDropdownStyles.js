@@ -53,8 +53,8 @@ export function useDropdownStyles(variant, options, header) {
 
 		// Check if header specifies right-side layout
 		const iconWrapper =
-			!header?.optionsParentClass ||
-			header.optionsParentClass.includes("flex-row-reverse")
+			!header?.options_wrapper_class ||
+			header.options_wrapper_class.includes("flex-row-reverse")
 				? "absolute inset-y-0 end-0 flex items-center"
 				: "absolute inset-y-0 start-0 flex items-center";
 
@@ -86,10 +86,10 @@ export function useDropdownStyles(variant, options, header) {
 	});
 
 	const optionWrapperClass = computed(() => {
-		if (!header?.optionsParentClass) return "";
+		if (!header?.options_wrapper_class) return "";
 		const isLeftAligned =
-			header.optionsParentClass.includes("flex-row-reverse");
-		return `${header.optionsParentClass} ${isLeftAligned ? "pe-6" : "ps-5"}`;
+			header.options_wrapper_class.includes("flex-row-reverse");
+		return `${header.options_wrapper_class} ${isLeftAligned ? "pe-6" : "ps-5"}`;
 	});
 
 	return { variantStyles, uiMenuValue, optionWrapperClass };

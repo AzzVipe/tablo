@@ -23,11 +23,11 @@
 	const emit = defineEmits(["update:modelValue"]);
 
 	// ---- Store ----
-	const store = globalStore[props.header.get_from]?.useStore();
+	const store = globalStore[props.header.source]?.useStore();
 
 	if (!store) {
 		console.warn(
-			`[MultiAssignDropdown] Store "${props.header.get_from}" not found in globalStore`
+			`[MultiAssignDropdown] Store "${props.header.source}" not found in globalStore`
 		);
 	}
 
@@ -59,14 +59,14 @@
 		// Already full objects — just map to selected shape directly
 		if (typeof val[0] === "object") {
 			return val.map((fv) => ({
-				id: getValueByPath(fv, props.header.get_from_value),
-				[props.header.get_from_field]: getValueByPath(
+				id: getValueByPath(fv, props.header.source_value),
+				[props.header.source_field]: getValueByPath(
 					fv,
-					props.header.get_from_field
+					props.header.source_field
 				),
-				[props.header.get_from_image]: getValueByPath(
+				[props.header.source_image]: getValueByPath(
 					fv,
-					props.header.get_from_image
+					props.header.source_image
 				),
 			}));
 		}
@@ -75,26 +75,26 @@
 		return val
 			.map((id) =>
 				dropdownCache.value.options.find(
-					(opt) => getValueByPath(opt, props.header.get_from_value) === id
+					(opt) => getValueByPath(opt, props.header.source_value) === id
 				)
 			)
 			.filter(Boolean)
 			.map((fv) => ({
-				id: getValueByPath(fv, props.header.get_from_value),
-				[props.header.get_from_field]: getValueByPath(
+				id: getValueByPath(fv, props.header.source_value),
+				[props.header.source_field]: getValueByPath(
 					fv,
-					props.header.get_from_field
+					props.header.source_field
 				),
-				[props.header.get_from_image]: getValueByPath(
+				[props.header.source_image]: getValueByPath(
 					fv,
-					props.header.get_from_image
+					props.header.source_image
 				),
 			}));
 	};
 
 	const selectedIds = computed(() =>
 		selected.value.map((item) =>
-			getValueByPath(item, props.header.get_from_value)
+			getValueByPath(item, props.header.source_value)
 		)
 	);
 
@@ -127,17 +127,17 @@
 		const value = props.header?.assign_data_using_object
 			? selected.value.map((item) => ({
 					id: item.id,
-					[props.header.get_from_value]: getValueByPath(
+					[props.header.source_value]: getValueByPath(
 						item,
-						props.header.get_from_value
+						props.header.source_value
 					),
-					[props.header.get_from_field]: getValueByPath(
+					[props.header.source_field]: getValueByPath(
 						item,
-						props.header.get_from_field
+						props.header.source_field
 					),
-					[props.header.get_from_image]: getValueByPath(
+					[props.header.source_image]: getValueByPath(
 						item,
-						props.header.get_from_image
+						props.header.source_image
 					),
 			  }))
 			: newIds;
@@ -152,8 +152,8 @@
 
 			try {
 				const res = await store.findRecords(
-					props.header.get_from_match || null,
-					props.header.get_from_sort || null,
+					props.header.source_match || null,
+					props.header.source_sort || null,
 					{ metadata: true }
 				);
 
@@ -206,13 +206,13 @@
 		:selectClass="selectClass"
 		:uiMenu="uiMenuValue"
 		:placeholder="`Search for ${header.name}`"
-		:option-attribute="header.get_from_field">
+		:option-attribute="header.source_field">
 		<template #label>
 			<div :class="variantStyles.labelClass">
 				<span v-if="selected.length" class="truncate">
 					{{
 						selected
-							.map((item) => getValueByPath(item, header.get_from_field))
+							.map((item) => getValueByPath(item, header.source_field))
 							.join(", ")
 					}}
 				</span>
@@ -228,11 +228,11 @@
 				:class="opt.class">
 				<div class="flex gap-2 items-center" :class="optionWrapperClass">
 					<ImageWrapper
-						:src="getValueByPath(opt, header.get_from_image)"
-						:name="getValueByPath(opt, header.get_from_field)"
+						:src="getValueByPath(opt, header.source_image)"
+						:name="getValueByPath(opt, header.source_field)"
 						styles="w-7 h-7 rounded-full object-cover text-white text-sm font-medium flex-shrink-0" />
 					<span :class="variantStyles.optionClass" class="truncate">
-						{{ getValueByPath(opt, header.get_from_field) }}
+						{{ getValueByPath(opt, header.source_field) }}
 					</span>
 				</div>
 			</div>

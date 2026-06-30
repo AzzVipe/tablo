@@ -645,8 +645,8 @@ export const useAPIStores = () => {
 		return new Promise((resolve, reject) => {
 			try {
 				let store;
-				if (globalStore[header.get_from]) {
-					store = globalStore[header.get_from].useStore();
+				if (globalStore[header.source]) {
+					store = globalStore[header.source].useStore();
 					store
 						.findById(header.assigned_value)
 						.then((record) => {

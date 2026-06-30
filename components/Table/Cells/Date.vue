@@ -11,7 +11,7 @@
 	const { content, header } = defineProps(["content", "header"]);
 
 	const setColor = (date) => {
-		if (isNullOrUndefinedOrEmpty(date) || !header.highlight_due_date)
+		if (isNullOrUndefinedOrEmpty(date) || !header.flag_overdue)
 			return "text-primary-600";
 
 		const contentDate = new Date(date);

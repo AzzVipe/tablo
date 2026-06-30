@@ -93,7 +93,7 @@
 								:ui="{ base: '!w-full' }"
 								:options="
 									tableConfig.headers.filter(
-										(header) => header.update_many === true
+										(header) => header.bulk_editable === true
 									)
 								"
 								v-model="selectedValue.header"
@@ -120,8 +120,8 @@
 								:header="{
 									name: 'field',
 									options: selectedValue.header.options,
-									optionsParentClass:
-										selectedValue.header.optionsParentClass || '',
+									options_wrapper_class:
+										selectedValue.header.options_wrapper_class || '',
 								}"
 								:fieldValue="selectedValue.value"
 								:required="true"
@@ -157,8 +157,8 @@
 								:header="{
 									name: 'field',
 									options: selectedValue.header.options,
-									optionsParentClass:
-										selectedValue.header.optionsParentClass || '',
+									options_wrapper_class:
+										selectedValue.header.options_wrapper_class || '',
 								}"
 								:fieldValue="selectedValue.value"
 								:required="true"

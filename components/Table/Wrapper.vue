@@ -199,11 +199,11 @@
 
 			// UNIQUE FILTER VALUES
 			if (
-				item.unique_values &&
+				item.filter_field &&
 				typeof store.fetchUniqueFieldValues === "function"
 			) {
 				try {
-					const res = await store.fetchUniqueFieldValues(item.unique_values);
+					const res = await store.fetchUniqueFieldValues(item.filter_field);
 
 					if (Array.isArray(res)) {
 						item.filter_options = res.map((value) => ({
@@ -230,7 +230,7 @@
 			}
 
 			// PRIMARY HEADER
-			if (item.is_primary) {
+			if (item.primary) {
 				tableConfig.primaryHeader = item;
 
 				if (item.searchable !== false) {
@@ -493,7 +493,8 @@
 								@delete-selected="store.deleteRecordsMany(tableState)"
 								:length="store.selectedRecords.length" />
 						</div>
-						<div class="flex items-center justify-end sm:gap-4 gap-2 w-full h-fit">
+						<div
+							class="flex items-center justify-end sm:gap-4 gap-2 w-full h-fit">
 							<div class="flex items-center sm:gap-4 gap-2">
 								<TableModalsTableState
 									:refreshRecordsHandle="refreshRecordsHandle"

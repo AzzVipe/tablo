@@ -27,25 +27,22 @@
 
 			fromStore.findRecords([obj]).then((res) => {
 				if (res?.length > 0) {
-					output.value = res[0][header.get_from_field];
+					output.value = res[0][header.source_field];
 				}
 			});
 		} else if (Array.isArray(content)) {
 			output.value = "";
 			content.forEach((item) => {
-				fromStore.findByField(header.get_from_value, item).then((res) => {
+				fromStore.findByField(header.source_value, item).then((res) => {
 					if (res) {
-						output.value = output.value.concat(
-							res[header.get_from_field],
-							", "
-						);
+						output.value = output.value.concat(res[header.source_field], ", ");
 					}
 				});
 			});
 		} else {
-			fromStore.findByField(header.get_from_value, content).then((res) => {
+			fromStore.findByField(header.source_value, content).then((res) => {
 				if (res) {
-					output.value = res[header.get_from_field];
+					output.value = res[header.source_field];
 				}
 			});
 		}

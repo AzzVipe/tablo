@@ -77,7 +77,7 @@
 				<div class="grid gap-4 mb-8 sm:grid-cols-2">
 					<template v-for="(header, index) in headers" :key="index">
 						<FormFields
-							v-if="header.is_update"
+							v-if="header.editable"
 							@update="handleAddFields($event)"
 							:key="currRecord"
 							:header="header"
