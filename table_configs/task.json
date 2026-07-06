@@ -219,7 +219,7 @@
 				"type": "text",
 				"path": "notes",
 				"attachment": true,
-				"table_view": true,
+				"table_view": false,
 				"editable": true,
 				"visible": true,
 				"component": "TableCellsDefault"
@@ -232,7 +232,7 @@
 				"type": "text",
 				"path": "chips",
 				"attachment": true,
-				"table_view": true,
+				"table_view": false,
 				"editable": true,
 				"visible": true,
 				"component": "TableCellsDefault"
